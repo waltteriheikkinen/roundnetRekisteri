@@ -1,4 +1,4 @@
-package fxHt;
+package fxHtSpike;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,20 +9,20 @@ import javafx.fxml.FXMLLoader;
 
 /**
  * @author waltt
- * @version 2.2.2023
+ * @version 22.2.2023
  *
  */
-public class HtMain extends Application {
+public class TiistaiSpikeMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader ldr = new FXMLLoader(getClass().getResource("HtGUIView.fxml"));
+            FXMLLoader ldr = new FXMLLoader(getClass().getResource("TiistaiSpikeGUIView.fxml"));
             final Pane root = ldr.load();
-            //final HtGUIController htCtrl = (HtGUIController) ldr.getController();
+            //final TiistaiSpikeGUIController tiistaispikeCtrl = (TiistaiSpikeGUIController) ldr.getController();
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("ht.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("tiistaispike.css").toExternalForm());
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Ht");
+            primaryStage.setTitle("TiistaiSpike");
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
