@@ -236,42 +236,39 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <BorderPane prefHeight="346.0" prefWidth="487.0">
-                           <left>
-                              <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                                 <top>
-                                    <Label text="Naiset" BorderPane.alignment="CENTER">
+                           <top>
+                              <GridPane BorderPane.alignment="CENTER">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.6666259765625" minWidth="10.0" prefWidth="55.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.6666259765625" minWidth="10.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.66668701171875" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.66668701171875" minWidth="10.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <ComboBoxChooser rivit="-&#10;Kaikki&#10;Miehet&#10;Naiset&#10;Alle 18v&#10;Alle 30v&#10;Alle 50v&#10;Kätisyys&#10;Taso" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                    <ComboBoxChooser rivit="-&#10;Kaikki&#10;Miehet&#10;Naiset&#10;Alle 18v&#10;Alle 30v&#10;Alle 50v&#10;Kätisyys&#10;Taso" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                                    <ComboBoxChooser rivit="-&#10;Kaikki&#10;Miehet&#10;Naiset&#10;Alle 18v&#10;Alle 30v&#10;Alle 50v&#10;Kätisyys&#10;Taso" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                    <Label text="Hakukriteerit:">
                                        <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </Label>
-                                 </top>
-                                 <right>
-                                    <StringGrid prefHeight="308.0" prefWidth="237.0" rivit="Ranking | Nimi | Ratio&#10;1 | Maija Mehiläinen | 0,82 &#10;2 | Titta Taateli | 0,73&#10;3 | Roosa Ruusunen | 0,3&#10;4 |&#10;5 | &#10;6 | &#10;7 | &#10;8 | &#10;9 | &#10;10 |&#10;" BorderPane.alignment="CENTER">
-                                       <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                    </StringGrid>
-                                 </right>
-                              </BorderPane>
-                           </left>
-                           <right>
-                              <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                                 <top>
-                                    <Label text="Miehet" BorderPane.alignment="CENTER">
-                                       <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
-                                       </padding>
-                                    </Label>
-                                 </top>
-                                 <left>
-                                    <StringGrid prefHeight="308.0" prefWidth="237.0" rivit="Ranking | Nimi | Ratio&#10;1 | Simo Siili | 0,9&#10;2 | Lenni Lokki | 0,67&#10;3 | Kalle Koppis | 0,52&#10;4 | Amir Amppari | 0,52&#10;5 | Sampsa Sammakko | 0,25&#10;6 | &#10;7 | &#10;8 | &#10;9 | &#10;10 |&#10;" BorderPane.alignment="CENTER">
-                                       <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                    </StringGrid>
-                                 </left>
-                              </BorderPane>
-                           </right>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </GridPane>
+                           </top>
+                           <center>
+                              <StringGrid prefHeight="273.0" prefWidth="489.0" rivit="Ranking | Nimi | Ratio&#10;1 | Simo Siili | 0,9&#10;2 | Lenni Lokki | 0,67&#10;3 | Kalle Koppis | 0,52&#10;4 | Amir Amppari | 0,52&#10;5 | Sampsa Sammakko | 0,25" BorderPane.alignment="CENTER">
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </StringGrid>
+                           </center>
                         </BorderPane>
                      </children>
                   </AnchorPane>
