@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import fi.jyu.mit.fxgui.StringGrid?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <StringGrid rivit="Ottelut | Tulos&#10;Simo &amp; Maija VS Lenni &amp; Titta | 21 - 18&#10;Amir &amp; Sampsa VS Lenni &amp; Titta | 21 - 13&#10;Amir &amp; Sampsa VS Simo &amp; Maija | 16 - 21" BorderPane.alignment="CENTER">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </StringGrid>
+   </center>
+   <top>
+      <Label BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>
