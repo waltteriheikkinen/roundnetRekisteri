@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="118.0" prefWidth="314.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="118.0" prefWidth="314.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxHtSpike.PoistaPelaajaController">
    <top>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -41,8 +40,8 @@
    <center>
       <HBox spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Kyllä" />
-            <Button alignment="CENTER" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.3" prefWidth="41.3" text="Ei" />
+            <Button fx:id="kyllaButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleKylla" text="Kyllä" />
+            <Button fx:id="eiButton" alignment="CENTER" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleEi" prefHeight="25.3" prefWidth="41.3" text="Ei" />
          </children>
          <padding>
             <Insets left="100.0" right="50.0" />

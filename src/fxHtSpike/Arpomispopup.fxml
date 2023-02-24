@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="213.0" prefWidth="186.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="213.0" prefWidth="186.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxHtSpike.ArpomispopupController">
    <top>
       <Label text="Valitse arpomiskriteeri" BorderPane.alignment="CENTER">
          <padding>
@@ -29,8 +28,8 @@
    <bottom>
       <HBox prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Arvo" />
-            <Button mnemonicParsing="false" text="Peruuta" />
+            <Button mnemonicParsing="false" onAction="#handleArvo" text="Arvo" />
+            <Button mnemonicParsing="false" onAction="#handlePeruuta" text="Peruuta" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="289.0" prefWidth="305.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="289.0" prefWidth="305.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxHtSpike.UusiPelaajaController">
    <top>
       <Label text="Täytä pelaajan tiedot" BorderPane.alignment="CENTER">
          <padding>
@@ -122,8 +121,8 @@
    <bottom>
       <HBox spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Tallenna" />
-            <Button mnemonicParsing="false" text="Peruuta" />
+            <Button fx:id="tallennaButton" mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna" />
+            <Button fx:id="peruutaButton" mnemonicParsing="false" onAction="#handlePeruuta" text="Peruuta" />
          </children>
          <BorderPane.margin>
             <Insets left="75.0" right="75.0" />

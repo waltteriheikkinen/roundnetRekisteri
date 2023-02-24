@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="507.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="507.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxHtSpike.ParitSkabatController">
    <left>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <center>
@@ -30,9 +30,10 @@
    <bottom>
       <HBox spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Lisää pelaaja" />
-            <Button mnemonicParsing="false" text="Poista pelaaja" />
-            <Button mnemonicParsing="false" text="Arvo parit" />
+            <Button fx:id="LisaaPelaajaButton" mnemonicParsing="false" onAction="#handleLisaaPelaaja" text="Lisää pelaaja" />
+            <Button fx:id="PoistaPelaajaButton" mnemonicParsing="false" onAction="#handlePoistaPelaaja" text="Poista pelaaja" />
+            <Button fx:id="arvoParitButton" mnemonicParsing="false" onAction="#handleArvoParit" text="Arvo parit" />
+            <Button fx:id="hyvaksyButton" mnemonicParsing="false" onAction="#handleHyvaksy" text="Hyväksy" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
