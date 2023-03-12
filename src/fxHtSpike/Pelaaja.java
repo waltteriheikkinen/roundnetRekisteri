@@ -3,6 +3,8 @@
  */
 package fxHtSpike;
 
+import java.util.Random;
+
 /**
  * @author waltt
  * @version 12.3.2023
@@ -14,7 +16,8 @@ public class Pelaaja {
     private int ika;
     private String nimi = "";
     private String katisyys = "Oikea";
-    private String sukupuoli = "";
+    private String sukupuoli = "Ei tiedossa";
+    private static int jasennro = 1;
     
 
     
@@ -35,8 +38,12 @@ public class Pelaaja {
      * tulostaa pelaajan tiedot
      */
     public void tulosta() {
-        System.out.println(this.id + "\n" + this.nimi + "\n" + this.tid + "\n"
-                + this.ika + "\n" + this.sukupuoli + this.katisyys + "\n");
+        System.out.println("Jäsen nro: " + this.id);
+        System.out.println("Nimi : " + this.nimi);
+        System.out.println("Taso: " + this.tid);
+        System.out.println("Ikä: " + this.ika);
+        System.out.println("Sukupuoli : " + this.sukupuoli);
+        System.out.println("Kätisyys: " + this.katisyys + "\n");
     }
     
     
@@ -66,15 +73,37 @@ public class Pelaaja {
         this.ika = ika;
     }
     
+    
+    /**
+     * luo satunnaiset tiedot pelaajan testaamista varten
+     */
+    public void luojotain() {
+        Random rand = new Random();
+        this.id = rand.nextInt(100);
+        this.tid = rand.nextInt(6);
+        this.ika = rand.nextInt(60);
+        this.nimi = "Simo Siili";
+        if (rand.nextBoolean()) this.katisyys = "Oikea";
+        else this.katisyys = "Vasen";
+        int arpa = rand.nextInt(3);
+        if (arpa == 0) this.sukupuoli = "Ei tiedossa";
+        if (arpa == 1) this.sukupuoli = "Mies";
+        if (arpa == 2) this.sukupuoli = "Nainen";
+    }
+    
     /**
      * @param args ei käytössä
      */
     public static void main(String[] args) {
         Pelaaja siili = new Pelaaja();
         siili.tulosta();
+        
         siili.setNimi("Simo Siili");
         siili.setTid(5);
         siili.setIka(26);
+        siili.tulosta();
+        
+        siili.luojotain();
         siili.tulosta();
         
 
