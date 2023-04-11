@@ -42,5 +42,19 @@ public class TiistaiSpikeGUIController {
     void HandleValitsePelaaja() {
         Dialogs.showMessageDialog("Vielä ei osata valita pelaajaa");
     }
+    
+    //=======================================================================================================================
+    // Tästä eteenpäin ei suoraan käyttöliittymään liittyvää koodia
+    
+    private TiistaiSpike tiistaispike;
+
+    
+    /**
+     * @param tiistaispike mitä tiistaispikeä käytetään
+     */
+    public void setKerho(TiistaiSpike tiistaispike) {
+        this.tiistaispike = tiistaispike;
+        
+    }
 
 }
