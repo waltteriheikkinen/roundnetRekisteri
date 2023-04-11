@@ -9,15 +9,15 @@ package fxHtSpike;
  *
  */
 public class Pelaajat {
-    private Pelaaja[] pelaajat = new Pelaaja[10];
+    private Pelaaja[] lista = new Pelaaja[10];
     private int lkm = 0;
 
     
     /**
      * @param pelaaja taulukkoon lisättävä pelaaja
      */
-    public void lisaa(Pelaaja pelaaja) { //TODO: Lisää tähän joku exception
-        this.pelaajat[this.getLkm()] = pelaaja;
+    public void lisaa(Pelaaja pelaaja) { //TODO: Lisää tähän joku exception   
+        this.lista[this.getLkm()] = pelaaja;
         this.lkm++;
     }
     
@@ -33,11 +33,20 @@ public class Pelaajat {
     
     /**
      * tulostaa pelaajat listaan
+     * @param pelaaja tulostettava pelaaja
      */
-    public void tulosta() {
-        for (int i = 0; i < this.lkm; i++) {
-            this.pelaajat[i].tulosta();
-        }
+    public void tulosta(Pelaaja pelaaja) {
+         pelaaja.tulosta();
+        
+    }
+    
+    
+    /**
+     * @param i pelaajan indeksi taulukossa
+     * @return palauttaa pelaajan
+     */
+    public Pelaaja annaPelaaja(int i) {
+        return lista[i];
     }
     
     
@@ -56,7 +65,10 @@ public class Pelaajat {
         pelaajat.lisaa(simo1);
         pelaajat.lisaa(simo2);
         pelaajat.lisaa(simo3);
-        pelaajat.tulosta();
+        for (int i = 0; i < pelaajat.getLkm(); i++) {
+            pelaajat.lista[i].tulosta();
+        }
+        
         
     
     }
