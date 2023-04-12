@@ -81,6 +81,13 @@ public class Pelaaja {
         return this.nimi;
     }
     
+    /**
+     * @return pelaajan iän
+     */
+    public int getIka() {
+        return this.ika;
+    }
+    
     
     /**
      * luo satunnaiset tiedot pelaajan testaamista varten
@@ -108,6 +115,31 @@ public class Pelaaja {
     }
     
     /**
+     * @return taso ideen
+     */
+    public int getTaso() {
+        return this.tid;
+    }
+    
+    
+    /**
+     * @return pelaajan suokupuolen
+     */
+    public String getSukupuoli() {
+        return this.sukupuoli;
+    }
+    
+    
+    /**
+     * @return pelaajan kätisyyden
+     */
+    public String getKatisyys() {
+        return this.katisyys;
+    }
+    
+    
+    
+    /**
      * @param args ei käytössä
      */
     public static void main(String[] args) {
@@ -124,6 +156,8 @@ public class Pelaaja {
         
 
     }
+
+    
 
     
 

@@ -8,6 +8,10 @@ import java.util.ResourceBundle;
 import fi.jyu.mit.fxgui.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 
 
 
@@ -19,6 +23,14 @@ import javafx.fxml.Initializable;
  */
 public class TiistaiSpikeGUIController implements Initializable{
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
+    @FXML private GridPane gridPelaaja;
+    @FXML private BorderPane borderPelaaja;
+    @FXML private TextField tiedotNimi;
+    @FXML private TextField tiedotIka;
+    @FXML private TextField tiedotSukupuoli;
+    @FXML private TextField tiedotKatisyys;
+    @FXML private TextField tiedotRating;
+    @FXML private TextField tiedotTaso;
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -58,11 +70,24 @@ public class TiistaiSpikeGUIController implements Initializable{
     
     //=======================================================================================================================
     // Tästä eteenpäin ei suoraan käyttöliittymään liittyvää koodia
-    
     private TiistaiSpike tiistaispike;
+    private TextArea textPelaaja = new TextArea(); //TODO: poista lopuksi
     
     private void alusta() {
         chooserPelaajat.clear();
+        chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
+    }
+    
+    private void naytaPelaaja() {
+        Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
+       
+        if (pelaajaKohdalla == null) return;
+       
+        tiedotNimi.setText(pelaajaKohdalla.getNimi());
+        tiedotTaso.setText(Integer.toString(pelaajaKohdalla.getTaso()));
+        tiedotIka.setText(Integer.toString(pelaajaKohdalla.getIka()));
+        tiedotSukupuoli.setText(pelaajaKohdalla.getSukupuoli());
+        tiedotKatisyys.setText(pelaajaKohdalla.getKatisyys());
     }
     
     
