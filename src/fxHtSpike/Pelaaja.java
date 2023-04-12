@@ -75,6 +75,14 @@ public class Pelaaja {
     
     
     /**
+     * @return pelaajan nimen
+     */
+    public String getNimi() {
+        return this.nimi;
+    }
+    
+    
+    /**
      * luo satunnaiset tiedot pelaajan testaamista varten
      */
     public void luojotain() {
@@ -82,13 +90,21 @@ public class Pelaaja {
         this.id = rand.nextInt(100);
         this.tid = rand.nextInt(6);
         this.ika = rand.nextInt(60);
-        this.nimi = "Simo Siili";
+        this.nimi = "Simo Siili " + rand.nextInt(100);
         if (rand.nextBoolean()) this.katisyys = "Oikea";
         else this.katisyys = "Vasen";
         int arpa = rand.nextInt(3);
         if (arpa == 0) this.sukupuoli = "Ei tiedossa";
         if (arpa == 1) this.sukupuoli = "Mies";
         if (arpa == 2) this.sukupuoli = "Nainen";
+    }
+    
+    
+    /**
+     * @return pelaajan id numeron
+     */
+    public int getId() {
+        return this.id;
     }
     
     /**
@@ -108,5 +124,7 @@ public class Pelaaja {
         
 
     }
+
+    
 
 }

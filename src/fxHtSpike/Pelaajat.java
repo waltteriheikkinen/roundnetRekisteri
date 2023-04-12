@@ -16,9 +16,14 @@ public class Pelaajat {
     /**
      * @param pelaaja taulukkoon lisättävä pelaaja
      */
-    public void lisaa(Pelaaja pelaaja) { //TODO: Lisää tähän joku exception   
-        this.lista[this.getLkm()] = pelaaja;
-        this.lkm++;
+    public void lisaa(Pelaaja pelaaja) { //Todo joku exception   
+        try {
+            this.lista[this.getLkm()] = pelaaja;
+            this.lkm++;
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println("Ei voida lisätä jäsentä" + e);
+        }
+        
     }
     
     
@@ -48,6 +53,8 @@ public class Pelaajat {
     public Pelaaja annaPelaaja(int i) {
         return lista[i];
     }
+    
+    
     
     
     /**

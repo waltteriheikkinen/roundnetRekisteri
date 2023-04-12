@@ -18,12 +18,16 @@ public class TiistaiSpikeMain extends Application {
         try {
             FXMLLoader ldr = new FXMLLoader(getClass().getResource("TiistaiSpikeGUIView.fxml"));
             final Pane root = ldr.load();
-            //final TiistaiSpikeGUIController tiistaispikeCtrl = (TiistaiSpikeGUIController) ldr.getController();
+            final TiistaiSpikeGUIController tiistaispikeCtrl = (TiistaiSpikeGUIController) ldr.getController();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("tiistaispike.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.setTitle("TiistaiSpike");
             primaryStage.show();
+            
+            TiistaiSpike tiistaispike = new TiistaiSpike();
+            tiistaispikeCtrl.setKerho(tiistaispike);
+            
         } catch(Exception e) {
             e.printStackTrace();
         }

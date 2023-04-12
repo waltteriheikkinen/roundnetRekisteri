@@ -49,7 +49,7 @@
                                  <center>
                                     <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <center>
-                                          <ListChooser prefHeight="189.0" prefWidth="217.0" rivit="Simo Siili&#10;Maija Mehiläinen&#10;Lenni Lokki&#10;Titta Taateli&#10;Amir Amppari&#10;Sampsa Sammakko" BorderPane.alignment="CENTER" />
+                                          <ListChooser fx:id="chooserPelaajat" prefHeight="189.0" prefWidth="217.0" rivit="Simo Siili&#10;Maija Mehiläinen&#10;Lenni Lokki&#10;Titta Taateli&#10;Amir Amppari&#10;Sampsa Sammakko" BorderPane.alignment="CENTER" />
                                        </center>
                                        <top>
                                           <GridPane hgap="5.0" BorderPane.alignment="CENTER">
