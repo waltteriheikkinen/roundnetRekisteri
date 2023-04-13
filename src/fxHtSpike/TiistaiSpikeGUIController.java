@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import fi.jyu.mit.fxgui.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -71,7 +70,6 @@ public class TiistaiSpikeGUIController implements Initializable{
     //=======================================================================================================================
     // Tästä eteenpäin ei suoraan käyttöliittymään liittyvää koodia
     private TiistaiSpike tiistaispike;
-    private TextArea textPelaaja = new TextArea(); //TODO: poista lopuksi
     
     private void alusta() {
         chooserPelaajat.clear();

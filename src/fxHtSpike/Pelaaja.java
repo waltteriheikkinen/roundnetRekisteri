@@ -95,8 +95,7 @@ public class Pelaaja {
     public void luojotain() {
         Random rand = new Random();
         this.id = seuraavanro++;
-        //this.id = rand.nextInt(100);
-        this.tid = rand.nextInt(6);
+        this.tid = rand.nextInt(5) + 1;
         this.ika = rand.nextInt(60);
         this.nimi = "Simo Siili " + this.id;
         if (rand.nextBoolean()) this.katisyys = "Oikea";

@@ -10,6 +10,7 @@ package fxHtSpike;
  */
 public class TiistaiSpike {
     private final Pelaajat pelaajat = new Pelaajat();
+    private final Tasot tasot = new Tasot();
     
     
     /**
