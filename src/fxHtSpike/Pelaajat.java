@@ -16,13 +16,17 @@ public class Pelaajat {
     /**
      * @param pelaaja taulukkoon lisättävä pelaaja
      */
-    public void lisaa(Pelaaja pelaaja) { //Todo joku exception   
-        try {
-            this.lista[this.getLkm()] = pelaaja;
-            this.lkm++;
-        } catch (IndexOutOfBoundsException e) {
-            System.err.println("Ei voida lisätä jäsentä" + e);
-        }
+    public void lisaa(Pelaaja pelaaja) { //Todo joku exception
+        if (this.lista.length <= this.lkm) {
+            Pelaaja[] vanhatpelaajat = this.lista;
+            lista = new Pelaaja[lkm + 5]; 
+            for (int i = 0; i < vanhatpelaajat.length; i++) {
+                this.lista[i] = vanhatpelaajat[i];
+            }
+        }                
+        this.lista[this.getLkm()] = pelaaja;
+        this.lkm++;
+       
         
     }
     

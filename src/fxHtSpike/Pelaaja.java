@@ -17,7 +17,7 @@ public class Pelaaja {
     private String nimi = "";
     private String katisyys = "Oikea";
     private String sukupuoli = "Ei tiedossa";
-    private static int jasennro = 1;
+    private static int seuraavanro = 1;
     
 
     
@@ -94,10 +94,11 @@ public class Pelaaja {
      */
     public void luojotain() {
         Random rand = new Random();
-        this.id = rand.nextInt(100);
+        this.id = seuraavanro++;
+        //this.id = rand.nextInt(100);
         this.tid = rand.nextInt(6);
         this.ika = rand.nextInt(60);
-        this.nimi = "Simo Siili " + rand.nextInt(100);
+        this.nimi = "Simo Siili " + this.id;
         if (rand.nextBoolean()) this.katisyys = "Oikea";
         else this.katisyys = "Vasen";
         int arpa = rand.nextInt(3);
