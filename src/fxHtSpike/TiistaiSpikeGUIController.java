@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import fi.jyu.mit.fxgui.*;
+import htSpike.Pelaaja;
+import htSpike.TiistaiSpike;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
@@ -44,6 +46,8 @@ public class TiistaiSpikeGUIController implements Initializable{
         alusta();
         
     }
+    
+    
     
     @FXML void HandleEteenPain() {
         ModalController.showModal(TiistaiSpikeGUIController.class.getResource("ParitSkabat.fxml"), "Parien valinta", null, "");
@@ -192,7 +196,7 @@ public class TiistaiSpikeGUIController implements Initializable{
     public void setKerho(TiistaiSpike tiistaispike) {
         this.tiistaispike = tiistaispike;        
     }
-
+    
     
 
 }

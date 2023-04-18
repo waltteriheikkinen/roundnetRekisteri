@@ -1,4 +1,4 @@
-package fxHtSpike;
+package htSpike;
 import java.io.PrintStream;
 import java.util.Random;
 

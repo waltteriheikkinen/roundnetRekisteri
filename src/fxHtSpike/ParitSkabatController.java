@@ -1,9 +1,12 @@
 package fxHtSpike;
 
+
+
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import fi.jyu.mit.fxgui.StringGrid;
+import htSpike.Pelaaja;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -20,6 +23,7 @@ public class ParitSkabatController implements ModalControllerInterface<String> {
     @FXML private Button arvoParitButton;
     @FXML private Button hyvaksyButton;
     @FXML private StringGrid<Pelaaja> gridParit;
+  //  private List<Pelaaja> valitut;
 
     
     @FXML void handleArvoParit() {
@@ -67,5 +71,6 @@ public class ParitSkabatController implements ModalControllerInterface<String> {
         gridParit.setSortable(1, false);
         gridParit.setSortable(2, false);
         gridParit.clear();
+        
     }
 }

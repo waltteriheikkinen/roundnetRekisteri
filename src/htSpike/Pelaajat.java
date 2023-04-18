@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fxHtSpike;
+package htSpike;
 
 /**
  * @author waltt
@@ -15,6 +15,23 @@ public class Pelaajat {
     
     /**
      * @param pelaaja taulukkoon lisättävä pelaaja
+     * @example
+     * <pre name="test">
+     * #STATICIMPORT
+     * #CLASSIMPORT
+     * Pelaajat pelaajat = new Pelaajat();
+     * Pelaaja pelaaja1 = new Pelaaja();
+     * pelaaja1.luojotain();
+     * Pelaaja pelaaja2 = new Pelaaja();
+     * pelaaja2.luojotain();
+     * pelaajat.getLkm() === 0;
+     * pelaajat.lisaa(pelaaja1);
+     * pelaajat.annaPelaaja(0) === pelaaja1;
+     * pelaajat.getLkm() === 1;
+     * pelaajat.lisaa(pelaaja2);
+     * pelaajat.annaPelaaja(1) === pelaaja2;
+     * pelaajat.getLkm() === 2;
+     * </pre>
      */
     public void lisaa(Pelaaja pelaaja) { //Todo joku exception
         if (this.lista.length <= this.lkm) {
@@ -25,9 +42,7 @@ public class Pelaajat {
             }
         }                
         this.lista[this.getLkm()] = pelaaja;
-        this.lkm++;
-       
-        
+        this.lkm++;       
     }
     
     
@@ -89,7 +104,7 @@ public class Pelaajat {
         for (int i = 0; i < pelaajat.getLkm(); i++) {
             pelaajat.lista[i].tulosta();
         }
-        Pelaaja uusi = pelaajat.getPelaaja(4);
+        Pelaaja uusi = pelaajat.getPelaaja(3);
         uusi.tulosta();
         
     
