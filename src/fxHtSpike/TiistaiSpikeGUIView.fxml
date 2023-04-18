@@ -199,7 +199,7 @@
                                           </GridPane>
                                        </top>
                                        <center>
-                                          <ListChooser prefHeight="189.0" prefWidth="217.0" rivit="Simo Siili&#10;Maija Mehiläinen&#10;Lenni Lokki&#10;Titta Taateli&#10;Amir Amppari&#10;Sampsa Sammakko" BorderPane.alignment="CENTER" />
+                                          <ListChooser fx:id="chooserValittavat" prefHeight="189.0" prefWidth="217.0" rivit="Simo Siili&#10;Maija Mehiläinen&#10;Lenni Lokki&#10;Titta Taateli&#10;Amir Amppari&#10;Sampsa Sammakko" BorderPane.alignment="CENTER" />
                                        </center>
                                     </BorderPane>
                                  </center>
@@ -222,7 +222,7 @@
                                     </Label>
                                  </top>
                                  <center>
-                                    <ListChooser prefWidth="217.0" rivit="Simo Siili&#10;Maija Mehiläinen&#10;Amir Amppari&#10;Titta Taateli" BorderPane.alignment="CENTER" />
+                                    <ListChooser fx:id="chooserValitut" prefWidth="217.0" rivit="Simo Siili&#10;Maija Mehiläinen&#10;Amir Amppari&#10;Titta Taateli" BorderPane.alignment="CENTER" />
                                  </center>
                               </BorderPane>
                            </right>
@@ -231,7 +231,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Ranking">
+            <Tab fx:id="tabRanking" onSelectionChanged="#handleRankingAvaus" text="Ranking">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -263,7 +263,7 @@
                               </GridPane>
                            </top>
                            <center>
-                              <StringGrid prefHeight="273.0" prefWidth="489.0" rivit="Ranking | Nimi | Ratio&#10;1 | Simo Siili | 0,9&#10;2 | Lenni Lokki | 0,67&#10;3 | Kalle Koppis | 0,52&#10;4 | Amir Amppari | 0,52&#10;5 | Sampsa Sammakko | 0,25" BorderPane.alignment="CENTER">
+                              <StringGrid fx:id="gridRanking" prefHeight="273.0" prefWidth="379.0" rivit="Ranking | Nimi | Ratio&#10;1 | Simo Siili | 0,9&#10;2 | Lenni Lokki | 0,67&#10;3 | Kalle Koppis | 0,52&#10;4 | Amir Amppari | 0,52&#10;5 | Sampsa Sammakko | 0,25" BorderPane.alignment="CENTER">
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>

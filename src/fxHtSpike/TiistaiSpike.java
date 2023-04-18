@@ -3,6 +3,8 @@
  */
 package fxHtSpike;
 
+import java.util.TreeMap;
+
 /**
  * @author waltt
  * @version 5.4.2023
@@ -11,7 +13,39 @@ package fxHtSpike;
 public class TiistaiSpike {
     private final Pelaajat pelaajat = new Pelaajat();
     private final Tasot tasot = new Tasot();
+    private final Ottelut ottelut = new Ottelut();
     
+    
+    /**
+     * Ohjelma muodostaa ranking listan otteluiden perusteella
+     */
+    public void rankkaa() {
+        this.ottelut.rankkaa();
+    }
+    
+    
+    /**
+     * @return palauttaa otteluiden ranking listan
+     */
+    public TreeMap<Double, Integer> getRanking(){
+        return this.ottelut.getRanking();
+    }
+    
+    /**
+     * @param ottelu lisättävä ottelu
+     */
+    public void lisaa(Ottelu ottelu) {
+        this.ottelut.lisaa(ottelu);
+    }
+    
+    
+    /**
+     * @param id tason id
+     * @return palauttaa ideetä vastaavan tason
+     */
+    public Taso getTaso(int id) {
+        return tasot.getTaso(id);
+    }
     
     /**
      * @param pelaaja lisättävä pelaaja
@@ -36,6 +70,15 @@ public class TiistaiSpike {
     public Pelaaja annaPelaaja(int i) {
         return pelaajat.annaPelaaja(i);
     }
+    
+    
+    /**
+     * @param id pelaajan id numero
+     * @return palauttaa pelaajan id numeron perusteella
+     */
+    public Pelaaja getPelaaja(int id) {
+        return this.pelaajat.getPelaaja(id);
+    }
 
     /**
      * @param args ei käytössä
@@ -54,6 +97,12 @@ public class TiistaiSpike {
             Pelaaja pelaaja = tiistaispike.annaPelaaja(i);
             pelaaja.tulosta();;
         }
+        
+        tiistaispike.rankkaa();
+        System.out.println(tiistaispike.getRanking().toString());
+        int id = tiistaispike.annaPelaaja(0).getId();
+        Pelaaja testi = tiistaispike.getPelaaja(id);
+        System.out.println(testi.getNimi());
     
     }
 

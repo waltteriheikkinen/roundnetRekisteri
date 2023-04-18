@@ -3,11 +3,15 @@ package fxHtSpike;
 
 
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 import fi.jyu.mit.fxgui.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -22,6 +26,10 @@ import javafx.scene.layout.GridPane;
  */
 public class TiistaiSpikeGUIController implements Initializable{
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
+    @FXML private ListChooser<Pelaaja> chooserValittavat;
+    @FXML private ListChooser<Pelaaja> chooserValitut;
+    @FXML private StringGrid<Object> gridRanking;
+    @FXML private Tab tabRanking;
     @FXML private GridPane gridPelaaja;
     @FXML private BorderPane borderPelaaja;
     @FXML private TextField tiedotNimi;
@@ -48,7 +56,8 @@ public class TiistaiSpikeGUIController implements Initializable{
 
     @FXML
     void HandlePoistaPelaaja() {
-        Dialogs.showMessageDialog("Vielä ei osata poistaa pelaajaa");
+       // Dialogs.showMessageDialog("Vielä ei osata poistaa pelaajaa");
+        poistaValittu();
     }
 
     @FXML
@@ -64,7 +73,13 @@ public class TiistaiSpikeGUIController implements Initializable{
 
     @FXML
     void HandleValitsePelaaja() {
-        Dialogs.showMessageDialog("Vielä ei osata valita pelaajaa");
+      //  Dialogs.showMessageDialog("Vielä ei osata valita pelaajaa");
+        valitsePelaaja();
+    }
+    
+    @FXML
+    void handleRankingAvaus() {
+        paivitaRanking();
     }
     
     //=======================================================================================================================
@@ -73,8 +88,55 @@ public class TiistaiSpikeGUIController implements Initializable{
     
     private void alusta() {
         chooserPelaajat.clear();
+        chooserValittavat.clear();
+        chooserValitut.clear();
+        gridRanking.setSortable(0, false);
+        gridRanking.setSortable(1, false);
+        gridRanking.setSortable(2, false);
         chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
     }
+    
+    
+    private void valitsePelaaja() {
+        Pelaaja valittava = chooserValittavat.getSelectedObject();
+        if (valittava == null) return;
+        
+        List<Pelaaja> valitut = chooserValitut.getObjects();
+        for (Pelaaja alkio : valitut) {
+            if (valittava.equals(alkio)) {
+                Dialogs.showMessageDialog("Pelaaja on jo valittu!");
+                return;
+            }
+        }
+        
+        chooserValitut.add(valittava.getNimi(), valittava);
+    }
+    
+    
+    private void poistaValittu() {
+        Pelaaja poistettava = chooserValitut.getSelectedObject();
+        List<Pelaaja> valitut = chooserValitut.getObjects();
+        valitut.remove(poistettava);
+        chooserValitut.clear();
+        for (Pelaaja alkio : valitut) {
+            chooserValitut.add(alkio.getNimi(), alkio);
+        }
+    }
+    
+    private void paivitaRanking() {
+        gridRanking.clear();
+        tiistaispike.rankkaa();
+        TreeMap<Double, Integer> ranking = tiistaispike.getRanking();        
+        int i = 1;
+        for (Map.Entry<Double, Integer> entry : ranking.entrySet()) {
+            String nimi = tiistaispike.getPelaaja(entry.getValue()).getNimi();
+            String[] rivi = {Integer.toString(i), nimi, entry.getKey().toString()};
+            gridRanking.add(rivi);
+            i++;
+        }
+        
+    }
+    
     
     private void naytaPelaaja() {
         Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
@@ -86,6 +148,9 @@ public class TiistaiSpikeGUIController implements Initializable{
         tiedotIka.setText(Integer.toString(pelaajaKohdalla.getIka()));
         tiedotSukupuoli.setText(pelaajaKohdalla.getSukupuoli());
         tiedotKatisyys.setText(pelaajaKohdalla.getKatisyys());
+        
+     //   Random rand = new Random(); //TODO: poista myöhemmin
+        tiedotRating.setText("");
     }
     
     
@@ -95,9 +160,9 @@ public class TiistaiSpikeGUIController implements Initializable{
     private void uusiPelaaja() {
         Pelaaja uusi = new Pelaaja();
         uusi.luojotain();
+        
         tiistaispike.lisaa(uusi);
         hae(uusi.getId());
-        
     }
     
     
@@ -107,13 +172,16 @@ public class TiistaiSpikeGUIController implements Initializable{
      */
     private void hae(int id) {
         chooserPelaajat.clear();
+        chooserValittavat.clear();
         int index = 0;
         for (int i = 0; i < tiistaispike.getPelaajia(); i++) {
             Pelaaja pelaaja = tiistaispike.annaPelaaja(i);
             if (pelaaja.getId() == id) index = i;
             chooserPelaajat.add(pelaaja.getNimi(), pelaaja);
+            chooserValittavat.add(pelaaja.getNimi(), pelaaja);
         }
         chooserPelaajat.setSelectedIndex(index);
+      //chooserPelaajatSkabat.setSelectedIndex(index);
     }
 
     

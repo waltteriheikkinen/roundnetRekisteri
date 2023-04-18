@@ -58,7 +58,17 @@ public class Pelaajat {
         return lista[i];
     }
     
-    
+    /**
+     * @param id pelaajan id
+     * @return palauttaa pelaajan id numeron perusteella
+     */
+    public Pelaaja getPelaaja(int id) {
+        for (int i = 0; i < this.lkm; i++) {
+            if (this.lista[i].getId() == id) return lista[i];
+        }
+        return null;
+        
+    }
     
     
     /**
@@ -79,7 +89,8 @@ public class Pelaajat {
         for (int i = 0; i < pelaajat.getLkm(); i++) {
             pelaajat.lista[i].tulosta();
         }
-        
+        Pelaaja uusi = pelaajat.getPelaaja(4);
+        uusi.tulosta();
         
     
     }
