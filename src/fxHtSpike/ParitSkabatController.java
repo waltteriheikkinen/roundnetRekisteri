@@ -3,6 +3,7 @@ package fxHtSpike;
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
+import fi.jyu.mit.fxgui.StringGrid;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -15,13 +16,12 @@ import javafx.scene.control.Button;
 public class ParitSkabatController implements ModalControllerInterface<String> {
 
     @FXML private Button LisaaPelaajaButton;
-
     @FXML private Button PoistaPelaajaButton;
-
     @FXML private Button arvoParitButton;
-
     @FXML private Button hyvaksyButton;
+    @FXML private StringGrid<Pelaaja> gridParit;
 
+    
     @FXML void handleArvoParit() {
         ModalController.showModal(ParitSkabatController.class.getResource("Arpomispopup.fxml"), "Arvontakriteerit", null, "");
     }
@@ -49,7 +49,7 @@ public class ParitSkabatController implements ModalControllerInterface<String> {
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
+        alusta();
         
     }
 
@@ -58,5 +58,14 @@ public class ParitSkabatController implements ModalControllerInterface<String> {
         // TODO Auto-generated method stub
         
     }
-    //TODO
+    
+    
+    //=========================================================================================
+    
+    private void alusta() {
+        gridParit.setSortable(0, false);
+        gridParit.setSortable(1, false);
+        gridParit.setSortable(2, false);
+        gridParit.clear();
+    }
 }

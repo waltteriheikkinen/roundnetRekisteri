@@ -56,7 +56,6 @@ public class TiistaiSpikeGUIController implements Initializable{
 
     @FXML
     void HandlePoistaPelaaja() {
-       // Dialogs.showMessageDialog("Vielä ei osata poistaa pelaajaa");
         poistaValittu();
     }
 
@@ -94,6 +93,8 @@ public class TiistaiSpikeGUIController implements Initializable{
         gridRanking.setSortable(1, false);
         gridRanking.setSortable(2, false);
         chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
+        chooserValittavat.setOnMouseClicked( e -> {if (e.getClickCount() == 2)  valitsePelaaja();} );
+        chooserValitut.setOnMouseClicked( e -> {if (e.getClickCount() == 2) poistaValittu();} );
     }
     
     
