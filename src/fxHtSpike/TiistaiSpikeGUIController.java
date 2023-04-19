@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -100,7 +101,9 @@ public class TiistaiSpikeGUIController implements Initializable{
         gridRanking.setSortable(-1, false);
         chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
         chooserValittavat.setOnMouseClicked( e -> {if (e.getClickCount() == 2)  valitsePelaaja();} );
+        chooserValittavat.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE ) valitsePelaaja();});
         chooserValitut.setOnMouseClicked( e -> {if (e.getClickCount() == 2) poistaValittu();} );
+        chooserValitut.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE ) poistaValittu();});
     }
     
     
