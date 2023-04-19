@@ -56,18 +56,19 @@ public class Pelaajat {
     
     
     /**
-     * tulostaa pelaajat listaan
-     * @param pelaaja tulostettava pelaaja
+     * tulostaa kaikki pelaajat
      */
-    public void tulosta(Pelaaja pelaaja) {
-         pelaaja.tulosta();
+    public void tulosta() {
+         for (int i = 0; i < lkm; i++) {
+             this.lista[i].tulosta();
+         }
         
     }
     
     
     /**
      * @param i pelaajan indeksi taulukossa
-     * @return palauttaa pelaajan
+     * @return palauttaa pelaajan indeksin mukaan
      */
     public Pelaaja annaPelaaja(int i) {
         return lista[i];
@@ -76,6 +77,24 @@ public class Pelaajat {
     /**
      * @param id pelaajan id
      * @return palauttaa pelaajan id numeron perusteella
+     * @example
+     * <pre name="test">
+     * #STATICIMPORT
+     * #CLASSIMPORT
+     * Pelaajat pelaajat = new Pelaajat();
+     * Pelaaja simo1 = new Pelaaja();
+     * Pelaaja simo2 = new Pelaaja();
+     * Pelaaja simo3 = new Pelaaja();
+     * simo1.luojotain();
+     * simo2.luojotain();
+     * simo3.luojotain();
+     * pelaajat.lisaa(simo1);
+     * pelaajat.lisaa(simo2);
+     * pelaajat.lisaa(simo3);
+     * pelaajat.tulosta();
+     * pelaajat.getPelaaja(1);
+     * 
+     * </pre>
      */
     public Pelaaja getPelaaja(int id) {
         for (int i = 0; i < this.lkm; i++) {
@@ -106,6 +125,8 @@ public class Pelaajat {
         }
         Pelaaja uusi = pelaajat.getPelaaja(3);
         uusi.tulosta();
+        System.out.println("================================");
+        pelaajat.tulosta();
         
     
     }

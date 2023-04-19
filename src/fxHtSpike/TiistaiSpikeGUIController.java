@@ -50,7 +50,11 @@ public class TiistaiSpikeGUIController implements Initializable{
     
     
     @FXML void HandleEteenPain() {
-        ModalController.showModal(TiistaiSpikeGUIController.class.getResource("ParitSkabat.fxml"), "Parien valinta", null, "");
+        if (tarkistaValitut()) {
+            ModalController.showModal(ParitSkabatController.class.getResource("ParitSkabat.fxml"), "Parien valinta", null, chooserValitut.getObjects());
+        }
+        else Dialogs.showMessageDialog("Pelaajia täytyy olla vähintään 4 ja parillinen määrä!");
+        return;
         }
 
     @FXML
@@ -93,12 +97,21 @@ public class TiistaiSpikeGUIController implements Initializable{
         chooserPelaajat.clear();
         chooserValittavat.clear();
         chooserValitut.clear();
-        gridRanking.setSortable(0, false);
-        gridRanking.setSortable(1, false);
-        gridRanking.setSortable(2, false);
+        gridRanking.setSortable(-1, false);
         chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
         chooserValittavat.setOnMouseClicked( e -> {if (e.getClickCount() == 2)  valitsePelaaja();} );
         chooserValitut.setOnMouseClicked( e -> {if (e.getClickCount() == 2) poistaValittu();} );
+    }
+    
+    
+    /**
+     * Ohjelma tarkistaa onko pelaajia oikea määrä
+     * @return true jos pelaajia on yli neljä ja parillinen määrä, muuten false
+     */
+    private Boolean tarkistaValitut() {
+        int pelaajia = this.chooserValitut.getObjects().size();
+        if (pelaajia < 4 || pelaajia % 2 != 0) return false;
+        return true;
     }
     
     

@@ -1,14 +1,11 @@
-/**
- * 
- */
 package htSpike;
 
 import java.util.Random;
 
 /**
- * @author waltt
+ * @author Waltteri
  * @version 12.3.2023
- * Pelaaja luokka pelaajien luomista varten
+ * Pelaaja luokka pelaajien luomista sekä yksittäisen pelaajan tietojen muokkausta varten
  */
 public class Pelaaja {
     private int id;
@@ -57,7 +54,7 @@ public class Pelaaja {
     
     
     /**
-     * Asetetaan pelaajan taso
+     * Asetetaan pelaajan taso id
      * @param taso pelaajan taso
      */
     public void setTid(int taso) {
@@ -115,7 +112,7 @@ public class Pelaaja {
     }
     
     /**
-     * @return taso ideen
+     * @return tason id numero
      */
     public int getTaso() {
         return this.tid;
