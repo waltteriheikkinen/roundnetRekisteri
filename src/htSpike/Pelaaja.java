@@ -94,7 +94,7 @@ public class Pelaaja {
         this.id = seuraavanro++;
         this.tid = rand.nextInt(5) + 1;
         this.ika = rand.nextInt(60);
-        this.nimi = "Simo Siili " + this.id;
+        this.nimi = "Heppu " + this.id;
         if (rand.nextBoolean()) this.katisyys = "Oikea";
         else this.katisyys = "Vasen";
         int arpa = rand.nextInt(3);

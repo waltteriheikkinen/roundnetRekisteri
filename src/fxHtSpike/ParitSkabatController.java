@@ -31,7 +31,6 @@ public class ParitSkabatController implements ModalControllerInterface<List<Pela
     @FXML private ListChooser<Pelaaja> chooserValitut;
     private List<Pelaaja> valitut;
     private List<Pelaaja> listaChooser = new ArrayList<Pelaaja>();
-    private List<Pelaaja> parit;
 
     
     @FXML void handleArvoParit() {
@@ -40,8 +39,8 @@ public class ParitSkabatController implements ModalControllerInterface<List<Pela
 
     @FXML void handleHyvaksy() {
         if (tarkistaParit()) {
-         //   luoParit(); //TODO: KORJAA TÄMÄ METODI JA TIETOJEN VIEMINEN
-            ModalController.showModal(ParitSkabatController.class.getResource("OttelutTulokset.fxml"), "Ottelut ja tulokset", null, "");
+            ArrayList<Pelaaja> parit = luoParit(); //TODO: KORJAA TÄMÄ METODI JA TIETOJEN VIEMINEN
+            ModalController.showModal(ParitSkabatController.class.getResource("OttelutTulokset.fxml"), "Ottelut ja tulokset", null, parit);
         }
         else Dialogs.showMessageDialog("Muodosta kaikki parit!");
         
@@ -98,17 +97,22 @@ public class ParitSkabatController implements ModalControllerInterface<List<Pela
     }
     
     
-    private void luoParit() {
-        for (int i = 0; i <= this.valitut.size() / 2; i++) {
+    private ArrayList<Pelaaja> luoParit() {
+        ArrayList<Pelaaja> parit = new ArrayList<Pelaaja>();
+        for (int i = 0; i < this.valitut.size() / 2; i++) {
             for (int j = 1; j <= 2; j++) {
                 String nimi = gridParit.get(i, j);
                 Pelaaja pelaaja = new Pelaaja();
                 for (int k = 0; k < valitut.size(); k++) {
-                    if (valitut.get(k).getNimi() == nimi) pelaaja = valitut.get(k);
+                    if (valitut.get(k).getNimi() == nimi) {
+                        pelaaja = valitut.get(k);
+                        break;
+                    }
                 }
                 parit.add(pelaaja);
             }
         }
+        return parit;
     }
     
     
