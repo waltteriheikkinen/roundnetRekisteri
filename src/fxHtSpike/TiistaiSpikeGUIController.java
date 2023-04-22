@@ -213,6 +213,13 @@ public class TiistaiSpikeGUIController implements Initializable{
         this.tiistaispike = tiistaispike;        
     }
     
+    /**
+     * @return viitteen tiistaispikeen
+     */
+    public TiistaiSpike getTiistaiSpike() {
+        return this.tiistaispike;
+    }
+    
     
 
 }

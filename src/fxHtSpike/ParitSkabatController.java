@@ -14,6 +14,7 @@ import htSpike.Pelaaja;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 /**
  * Controlleri parien valitsemiselle
@@ -41,6 +42,9 @@ public class ParitSkabatController implements ModalControllerInterface<List<Pela
         if (tarkistaParit()) {
             ArrayList<Pelaaja> parit = luoParit(); //TODO: KORJAA TÄMÄ METODI JA TIETOJEN VIEMINEN
             ModalController.showModal(ParitSkabatController.class.getResource("OttelutTulokset.fxml"), "Ottelut ja tulokset", null, parit);
+            Stage stage = (Stage) hyvaksyButton.getScene().getWindow();        
+            stage.close();
+            //TODO: tarkista ikkunan sulkeminen sulkeminen!
         }
         else Dialogs.showMessageDialog("Muodosta kaikki parit!");
         

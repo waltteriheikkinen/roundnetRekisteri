@@ -11,9 +11,18 @@ import java.util.Random;
  */
 public class Ottelu {
     private int[] parit = new int[4];
-    private int[] era1 = new int[2];
-    private int[] era2 = new int[2];
-    private int[] era3 = new int[2];
+    private int[] pisteet = new int[6];
+    
+    
+    /**
+     * @param parit pelaajat ottelussa
+     * @param pisteet ottelun pisteet
+     */
+    public Ottelu(int[] parit, int[] pisteet) {
+        this.parit = parit;
+        this.pisteet = pisteet;
+        
+    }
     
     
     /**
@@ -27,20 +36,20 @@ public class Ottelu {
         this.parit[3] = 4;
         
         if (rand.nextBoolean()) {
-            this.era1[0] = 21;
-            this.era1[1] = rand.nextInt(20);
-            this.era2[0] = rand.nextInt(20);
-            this.era2[1] = 21;
-            this.era3[0] = 21;
-            this.era3[1] = rand.nextInt(20);
+            this.pisteet[0] = 21;
+            this.pisteet[1] = rand.nextInt(20);
+            this.pisteet[2] = rand.nextInt(20);
+            this.pisteet[3] = 21;
+            this.pisteet[4] = 21;
+            this.pisteet[5] = rand.nextInt(20);
         }
         else {
-            this.era1[0] = rand.nextInt(20);
-            this.era1[1] = 21;
-            this.era2[0] = 21;
-            this.era2[1] = rand.nextInt(20);
-            this.era3[0] = rand.nextInt(20);
-            this.era3[1] = 21;
+            this.pisteet[0] = rand.nextInt(20);
+            this.pisteet[1] = 21;
+            this.pisteet[2] = 21;
+            this.pisteet[3] = rand.nextInt(20);
+            this.pisteet[4] = rand.nextInt(20);
+            this.pisteet[5] = 21;
         }
         
         
@@ -65,12 +74,12 @@ public class Ottelu {
         this.parit[1] = pelaaja2;
         this.parit[2] = pelaaja3;
         this.parit[3] = pelaaja4;
-        this.era1[0] = era1pari1;
-        this.era1[1] = era1pari2;
-        this.era2[0] = era2pari1;
-        this.era2[1] = era2pari2;
-        this.era3[0] = era3pari1;
-        this.era3[1] = era3pari2;
+        this.pisteet[0] = era1pari1;
+        this.pisteet[1] = era1pari2;
+        this.pisteet[2] = era2pari1;
+        this.pisteet[3] = era2pari2;
+        this.pisteet[4] = era3pari1;
+        this.pisteet[5] = era3pari2;
     }
     
     
@@ -109,16 +118,33 @@ public class Ottelu {
     
     /**
      * @return 1 jos pari 1 voitti, 2 jos pari2 voitti, muuten -1
+     * @example
+     * <pre name="test">
+     * #STATICIMPORT
+     * #import htSpike.Ottelu;
+     * int[] parit = {1,2,3,4};
+     * int[] pisteet = {21,15,14,21,21,16};
+     * Ottelu ottelu = new Ottelu(parit, pisteet);
+     * ottelu.voittaja() === 1;
+     * int[] parit2 = {1,2,3,4};
+     * int[] pisteet2 = {15,21,21,15,13,21};
+     * Ottelu ottelu2 = new Ottelu(parit2, pisteet2);
+     * ottelu2.voittaja() === 2;
+     * int[] parit3 = {1,2,3,4};
+     * int[] pisteet3 = {21,15,14,21,0,0};
+     * Ottelu ottelu3 = new Ottelu(parit3, pisteet3);
+     * ottelu3.voittaja() === -1;
+     * </pre>
      */
     public int voittaja() {
         int pari1erat = 0;
         int pari2erat = 0;
-        if (this.era1[0] < this.era1[1]) pari2erat++;
-        if (this.era1[0] > this.era1[1]) pari1erat++;
-        if (this.era2[0] < this.era2[1]) pari2erat++;
-        if (this.era2[0] > this.era2[1]) pari1erat++;
-        if (this.era3[0] < this.era3[1]) pari2erat++;
-        if (this.era3[0] > this.era3[1]) pari1erat++;
+        if (this.pisteet[0] < this.pisteet[1]) pari2erat++;
+        if (this.pisteet[0] > this.pisteet[1]) pari1erat++;
+        if (this.pisteet[2] < this.pisteet[3]) pari2erat++;
+        if (this.pisteet[2] > this.pisteet[3]) pari1erat++;
+        if (this.pisteet[4] < this.pisteet[5]) pari2erat++;
+        if (this.pisteet[4] > this.pisteet[5]) pari1erat++;
         if (pari1erat < pari2erat) return 2;
         if (pari1erat > pari2erat) return 1;
         return -1;
@@ -131,12 +157,12 @@ public class Ottelu {
     public void tulosta(PrintStream os) {
         PrintStream out = new PrintStream(os);
         out.println(parit[0] + "&" + parit[1] + " VS " + parit[2] + "&" + parit[3]);
-        out.println("Erä 1: " + era1[0] + " - " + era1[1]);
-        if (era2[0] > 0 || era2[1] > 0) {
-            out.println("Erä 2: " + era2[0] + " - " + era2[1]);
+        out.println("Erä 1: " + this.pisteet[0] + " - " + this.pisteet[1]);
+        if (this.pisteet[2] > 0 || this.pisteet[3] > 0) {
+            out.println("Erä 2: " + this.pisteet[2] + " - " + this.pisteet[3]);
         }
-        if (era3[0] > 0 || era3[1] > 0) {
-            out.println("Erä 3: " + era3[0] + " - " + era3[1]);
+        if (this.pisteet[4] > 0 || this.pisteet[5] > 0) {
+            out.println("Erä 3: " + this.pisteet[4] + " - " + this.pisteet[5]);
         }
         
         if (this.voittaja() == 1) out.println("Pari 1 voitti!\n");

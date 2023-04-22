@@ -20,15 +20,11 @@ public class Pelaaja {
     
     /**
      * @return pelaajan tiedot merkkijonona
-     * @example
-     * <pre name="test">
-     * Pelaaja simo = new Pelaaja();
-     * simo.toString() === "";
-     * </pre>
      */
     @Override
     public String toString() {
-        return "";
+        return this.id + "|" + this.nimi + "|" + this.tid + "|" + this.ika + "|" +
+               this.katisyys + "|" + this.sukupuoli;
     }
     
     /**
@@ -94,7 +90,7 @@ public class Pelaaja {
         this.id = seuraavanro++;
         this.tid = rand.nextInt(5) + 1;
         this.ika = rand.nextInt(60);
-        this.nimi = "Heppu " + this.id;
+        this.nimi = "Heppu" + this.id;
         if (rand.nextBoolean()) this.katisyys = "Oikea";
         else this.katisyys = "Vasen";
         int arpa = rand.nextInt(3);
