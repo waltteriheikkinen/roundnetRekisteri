@@ -4,11 +4,13 @@
 package htSpike;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 import java.util.TreeMap;
 
 /**
@@ -20,6 +22,27 @@ public class Ottelut {
     private ArrayList<Ottelu> ottelulista = new ArrayList<Ottelu>();
     private TreeMap<Double, Integer> ranking = new TreeMap<Double, Integer>(Collections.reverseOrder());
     
+    
+    /**
+     * @param hakemisto mistä tiedosto löytyy
+     * @throws FileNotFoundException poikkeus jos tiedostoa ei löydy
+     */
+    public void lueTiedostosta(String hakemisto) throws FileNotFoundException {
+        String tiedostonimi = hakemisto + "/ottelut.dat";
+        File tiedosto = new File(tiedostonimi);
+        
+        try (Scanner fi = new Scanner(new FileInputStream(tiedosto))){
+            while (fi.hasNext()) {
+                String s = fi.nextLine();
+                if (s == null || "".equals(s) || s.charAt(0) == '#') continue;
+                Ottelu ottelu = new Ottelu();
+                ottelu.parse(s);
+                this.ottelulista.add(ottelu);
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException(e.getMessage() + "Tiedosto ei aukea!");
+        }
+    }
     
     /**
      * @param hakemisto mihin tallennetaan
@@ -80,7 +103,7 @@ public class Ottelut {
      */
     public void lisaa(Ottelu peli) {
         this.ottelulista.add(0, peli);
-        if (this.ottelulista.size() > 3) this.ottelulista.remove(3);
+        if (this.ottelulista.size() > 10) this.ottelulista.remove(10);
     }
     
     
@@ -112,23 +135,29 @@ public class Ottelut {
      */
     public static void main(String[] args) throws FileNotFoundException {
         Ottelut ottelut = new Ottelut();
-        Ottelu peli1 = new Ottelu();
-        Ottelu peli2 = new Ottelu();
-        Ottelu peli3 = new Ottelu();
-        ottelut.lisaa(peli1);
-        ottelut.lisaa(peli2);
-        ottelut.lisaa(peli3);
         
-        for (Ottelu peli : ottelut.ottelulista) {
-            peli.tulosta(System.out);
+        
+        try {
+            ottelut.lueTiedostosta("tallennustestit");
+        } catch(FileNotFoundException e) {
+            System.err.println(e.getMessage());
+            //throw new FileNotFoundException(e.getMessage() + "Tiedostoa ei löydy!");
         }
         
-        Ottelu peli4 = new Ottelu();
-        Ottelu peli5 = new Ottelu();
-        Ottelu peli6 = new Ottelu();        
-        ottelut.lisaa(peli4);
-        ottelut.lisaa(peli5);
-        ottelut.lisaa(peli6);
+        
+        int[] pelaajat = {1,0,0,0};
+        int[] tulos = {1,2,3,4,5,6};
+        Ottelu peli1 = new Ottelu(pelaajat, tulos);
+        ottelut.lisaa(peli1);
+        
+        
+        pelaajat[0] = 2;
+        Ottelu peli2 = new Ottelu(pelaajat, tulos);
+        ottelut.lisaa(peli2);
+        
+        pelaajat[0] = 3;
+        Ottelu peli3 = new Ottelu(pelaajat, tulos);
+        ottelut.lisaa(peli3);
         
         for (Ottelu peli : ottelut.ottelulista) {
             peli.tulosta(System.out);
@@ -137,6 +166,10 @@ public class Ottelut {
         ottelut.rankkaa();
         System.out.println(ottelut.ranking.toString());
         ottelut.tallenna("tallennustestit");
+        for (Ottelu ottelu : ottelut.ottelulista) {
+            System.out.println(ottelu.toString());
+        }
+        System.out.println();
     
     }
 

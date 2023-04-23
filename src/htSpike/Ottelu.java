@@ -3,6 +3,8 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Random;
 
+import fi.jyu.mit.ohj2.Mjonot;
+
 
 
 /**
@@ -20,7 +22,9 @@ public class Ottelu {
      * @param pisteet ottelun pisteet
      */
     public Ottelu(int[] parit, int[] pisteet) {
-        this.parit = parit;        
+        for (int i = 0; i < parit.length && i < this.parit.length; i++) {
+            this.parit[i] = parit[i];
+        }               
         for (int i = 0; i < pisteet.length && i < this.pisteet.length; i++) {
             this.pisteet[i] = pisteet[i];
         }       
@@ -223,6 +227,30 @@ public class Ottelu {
      */
     public int getPelaaja(int indeksi) {
         return parit[indeksi - 1];
+    }
+    
+    
+    /**
+     * @param s merkkijono pelaajan tiedoista
+     * @example
+     * <pre name="test">
+     * #STATICIMPORT
+     * #import htSpike.*;
+     * String s = "1|2|3|4|21|15|21|15|0|0";
+     * Ottelu ottelu = new Ottelu();
+     * ottelu.parse(s);
+     * ottelu.voittaja() === 1;
+     * ottelu.toString() === "1|2|3|4|21|15|21|15|0|0"
+     * </pre>
+     */
+    public void parse(String s) {
+        StringBuilder rivi = new StringBuilder(s);
+        for (int i = 0; i < this.parit.length; i++) {
+            this.parit[i] = Mjonot.erota(rivi, '|', this.parit[i]);
+        }
+        for (int i = 0; i < this.pisteet.length; i++) {
+            this.pisteet[i] = Mjonot.erota(rivi, '|', this.pisteet[i]);
+        }
     }
 
     
