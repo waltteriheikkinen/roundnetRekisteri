@@ -135,12 +135,14 @@ public class Ottelu {
      * int[] pelaajat = {simo1.getId(), simo2.getId(), simo3.getId(), simo4.getId()};
      * int[] tulos = {21,15,15,21,21,15};
      * Ottelu ottelu = new Ottelu(pelaajat, tulos);
-     * ottelu.toString() === "Parit: [1, 2, 3, 4], pisteet: [21, 15, 15, 21, 21, 15]";
+     * ottelu.toString() === "1|2|3|4|21|15|15|21|21|15";
      * </pre>
      */
     @Override
     public String toString() {
-        return "Parit: " + Arrays.toString(this.parit) + ", pisteet: " + Arrays.toString(this.pisteet);
+        return this.parit[0] + "|" + this.parit[1] + "|" + this.parit[2] + "|" + this.parit[3] + "|" +
+               this.pisteet[0] + "|" + this.pisteet[1] + "|" + this.pisteet[2] + "|" + this.pisteet[3] + "|" +
+               this.pisteet[4] + "|" + this.pisteet[5];
     }
     
     
@@ -223,6 +225,8 @@ public class Ottelu {
         return parit[indeksi - 1];
     }
 
+    
+    
     /**
      * @param args ei käytössä
      */

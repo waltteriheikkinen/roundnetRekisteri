@@ -2,18 +2,20 @@ package htSpike;
 
 import java.util.Random;
 
+import fi.jyu.mit.ohj2.Mjonot;
+
 /**
  * @author Waltteri
  * @version 12.3.2023
  * Pelaaja luokka pelaajien luomista sekä yksittäisen pelaajan tietojen muokkausta varten
  */
 public class Pelaaja {
-    private int id;
+    private int id  = 0;
     private int tid = 1;
-    private int ika;
+    private int ika = 0;
     private String nimi = "";
-    private String katisyys = "Oikea";
-    private String sukupuoli = "Ei tiedossa";
+    private String katisyys = "";
+    private String sukupuoli = "";
     private static int seuraavanro = 1;
     
 
@@ -93,10 +95,10 @@ public class Pelaaja {
         this.nimi = "Heppu" + this.id;
         if (rand.nextBoolean()) this.katisyys = "Oikea";
         else this.katisyys = "Vasen";
-        int arpa = rand.nextInt(3);
+        int arpa = rand.nextInt(11);
         if (arpa == 0) this.sukupuoli = "Ei tiedossa";
-        if (arpa == 1) this.sukupuoli = "Mies";
-        if (arpa == 2) this.sukupuoli = "Nainen";
+        if (1 <= arpa && arpa <= 5) this.sukupuoli = "Mies";
+        if (arpa > 5) this.sukupuoli = "Nainen";
     }
     
     
@@ -128,6 +130,44 @@ public class Pelaaja {
      */
     public String getKatisyys() {
         return this.katisyys;
+    }
+    
+    
+    /**
+     * @param s merkkijono pelaajan tiedoista
+     * @example
+     * <pre name="test">
+     * #STATICIMPORT
+     * #import htSpike.*;
+     * Pelaajat pelaajat = new Pelaajat();
+     * String s = "3|Heppu1|4|38|Oikea|Mies";
+     * Pelaaja pelaaja = new Pelaaja();
+     * pelaaja.parse(s);
+     * pelaaja.getId() === 3;
+     * pelaajat.lisaa(pelaaja);
+     * int n = pelaaja.getId();
+     * pelaaja.parse("" + (n + 20));
+     * pelaaja.luojotain();
+     * pelaaja.getId() === n + 20 + 1;
+     * </pre>
+     */
+    public void parse(String s) {
+        StringBuilder rivi = new StringBuilder(s);
+        setId(Mjonot.erota(rivi, '|', this.getId()));
+        this.nimi = Mjonot.erota(rivi, '|', this.nimi);
+        this.tid = Mjonot.erota(rivi, '|', this.tid);
+        this.ika = Mjonot.erota(rivi, '|', this.ika);
+        this.katisyys = Mjonot.erota(rivi, '|', this.katisyys);
+        this.sukupuoli = Mjonot.erota(rivi, '|', this.sukupuoli);
+    }
+    
+    
+    /**
+     * @param id pelaajan id
+     */
+    private void setId(int id) {
+        this.id = id;
+        if (seuraavanro <= id) seuraavanro = id + 1;
     }
     
     

@@ -4,9 +4,11 @@
 package htSpike;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 /**
  * @author waltt
@@ -18,6 +20,7 @@ public class Pelaajat {
     private int lkm = 0;
 
     
+    //TODO: testit tähän
     /**
      * @param hakemisto mihin tallennetaan
      * @throws FileNotFoundException poikkeus
@@ -134,11 +137,42 @@ public class Pelaajat {
     
     
     /**
+     * @param hakemisto mistä tiedosto löytyy
+     * @throws FileNotFoundException poikkeus jos tiedostoa ei löydy
+     */
+    public void lueTiedostosta(String hakemisto) throws FileNotFoundException {
+        String tiedostonimi = hakemisto + "/pelaajat.dat";
+        File tiedosto = new File(tiedostonimi);
+        
+        try (Scanner fi = new Scanner(new FileInputStream(tiedosto))){
+            while (fi.hasNext()) {
+                String s = fi.nextLine();
+                if (s == null || "".equals(s) || s.charAt(0) == '#') continue;
+                Pelaaja pelaaja = new Pelaaja();
+                pelaaja.parse(s);
+                this.lisaa(pelaaja);
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException(e.getMessage() + "Tiedosto ei aukea!");
+        }
+        
+    }
+    
+    
+    /**
      * @param args ei käytössä
      * @throws FileNotFoundException poikkeus jos tiedostoa ei ole
      */
     public static void main(String[] args) throws FileNotFoundException {
         Pelaajat pelaajat = new Pelaajat();
+        
+        try {
+            pelaajat.lueTiedostosta("tallennustestit");
+        } catch(FileNotFoundException e) {
+            System.err.println(e.getMessage());
+            //throw new FileNotFoundException(e.getMessage() + "Tiedostoa ei löydy!");
+        }
+        
         Pelaaja simo1 = new Pelaaja();
         Pelaaja simo2 = new Pelaaja();
         Pelaaja simo3 = new Pelaaja();

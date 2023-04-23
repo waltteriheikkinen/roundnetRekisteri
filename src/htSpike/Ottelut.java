@@ -3,6 +3,10 @@
  */
 package htSpike;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.TreeMap;
@@ -15,6 +19,29 @@ import java.util.TreeMap;
 public class Ottelut {
     private ArrayList<Ottelu> ottelulista = new ArrayList<Ottelu>();
     private TreeMap<Double, Integer> ranking = new TreeMap<Double, Integer>(Collections.reverseOrder());
+    
+    
+    /**
+     * @param hakemisto mihin tallennetaan
+     * @throws FileNotFoundException poikkeus
+     * Tiedoston muoto:
+     * 1|2|3|4|21|15|21|15|0|0
+     * @example
+     * <pre name="test">
+     * 
+     * </pre>
+     */
+    public void tallenna(String hakemisto) throws FileNotFoundException {
+        File ftied = new File(hakemisto + "/ottelut.dat");
+        try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))){
+            for (int i = 0; i < this.ottelulista.size(); i++) {
+                Ottelu ottelu = this.ottelulista.get(i);
+                fo.println(ottelu.toString());
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("Tiedosto " + ftied.getAbsolutePath() + " ei aukea!\n" + e.getMessage());
+        }
+    }
     
     
     /**
@@ -81,8 +108,9 @@ public class Ottelut {
 
     /**
      * @param args ei käytössä
+     * @throws FileNotFoundException poikkeus jos tiedostoa ei löydy
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Ottelut ottelut = new Ottelut();
         Ottelu peli1 = new Ottelu();
         Ottelu peli2 = new Ottelu();
@@ -108,6 +136,7 @@ public class Ottelut {
         
         ottelut.rankkaa();
         System.out.println(ottelut.ranking.toString());
+        ottelut.tallenna("tallennustestit");
     
     }
 
