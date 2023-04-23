@@ -1,5 +1,6 @@
 package htSpike;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -7,7 +8,7 @@ import java.util.Random;
 /**
  * @author waltt
  * @version 13.4.2023
- *
+ * Luokka yksittäisen ottelun luomista ja käsittelyä varten
  */
 public class Ottelu {
     private int[] parit = new int[4];
@@ -19,9 +20,10 @@ public class Ottelu {
      * @param pisteet ottelun pisteet
      */
     public Ottelu(int[] parit, int[] pisteet) {
-        this.parit = parit;
-        this.pisteet = pisteet;
-        
+        this.parit = parit;        
+        for (int i = 0; i < pisteet.length && i < this.pisteet.length; i++) {
+            this.pisteet[i] = pisteet[i];
+        }       
     }
     
     
@@ -117,6 +119,32 @@ public class Ottelu {
     }
     
     /**
+     * Aliohjelma palauttaa ottelun merkkijonona
+     * @example
+     * <pre name="test">
+     * #STATICIMPORT
+     * #import htSpike.Pelaaja;
+     * Pelaaja simo1 = new Pelaaja();
+     * Pelaaja simo2 = new Pelaaja();
+     * Pelaaja simo3 = new Pelaaja();
+     * Pelaaja simo4 = new Pelaaja();
+     * simo1.luojotain();
+     * simo2.luojotain();
+     * simo3.luojotain();
+     * simo4.luojotain();
+     * int[] pelaajat = {simo1.getId(), simo2.getId(), simo3.getId(), simo4.getId()};
+     * int[] tulos = {21,15,15,21,21,15};
+     * Ottelu ottelu = new Ottelu(pelaajat, tulos);
+     * ottelu.toString() === "Parit: [1, 2, 3, 4], pisteet: [21, 15, 15, 21, 21, 15]";
+     * </pre>
+     */
+    @Override
+    public String toString() {
+        return "Parit: " + Arrays.toString(this.parit) + ", pisteet: " + Arrays.toString(this.pisteet);
+    }
+    
+    
+    /**
      * @return 1 jos pari 1 voitti, 2 jos pari2 voitti, muuten -1
      * @example
      * <pre name="test">
@@ -153,6 +181,22 @@ public class Ottelu {
     
     /**
      * @param os tietovirta johon tulostetaan
+     * @example
+     * <pre name="test">
+     * #import fi.jyu.mit.ohj2.Suuntaaja;
+     * Suuntaaja.StringOutput so = new Suuntaaja.StringOutput();
+     * int[] pelaajat = {1,2,3,4};
+     * int[] tulos = {21,13,12,21,21,15};
+     * Ottelu ottelu = new Ottelu(pelaajat, tulos);
+     * ottelu.tulosta(System.out);
+     * String tulostus = "1&2 VS 3&4\n" +
+     *                "Erä 1: 21 - 13\n" +
+     *                "Erä 2: 12 - 21\n" +
+     *                "Erä 3: 21 - 15\n" +
+     *                "Pari 1 voitti!\n";
+     * so.ero(tulostus) === null;
+     * so.palauta();
+     * </pre>
      */
     public void tulosta(PrintStream os) {
         PrintStream out = new PrintStream(os);
@@ -167,8 +211,7 @@ public class Ottelu {
         
         if (this.voittaja() == 1) out.println("Pari 1 voitti!\n");
         if (this.voittaja() == 2) out.println("Pari 2 voitti!\n");
-        if (this.voittaja() < 0) out.println("Tasapeli\n");
-        
+        if (this.voittaja() < 0) out.println("Tasapeli\n");        
     }
     
     
@@ -198,6 +241,11 @@ public class Ottelu {
                 21, 15, 21, 17);
         ottelu1.tulosta(System.out);
         ottelu2.tulosta(System.out);
+        int[] pelaajat = {simo1.getId(), simo2.getId(), simo3.getId(), simo4.getId()};
+        int[] tulos = {21,13,12,21,21,15};
+        Ottelu ottelu3 = new Ottelu(pelaajat, tulos);
+        ottelu3.tulosta(System.out);
+        System.out.println(Arrays.toString(ottelu3.pisteet));
     
     }
 

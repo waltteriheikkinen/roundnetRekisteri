@@ -146,6 +146,7 @@ public class Pelaaja {
         
         siili.luojotain();
         siili.tulosta();
+        System.out.println(siili);
         
 
     }

@@ -10,18 +10,46 @@ import java.util.TreeMap;
 /**
  * @author waltt
  * @version 14.4.2023
- *
+ * Luokka kaikkien otteluiden tallettamista ja käsittelyä varten
  */
 public class Ottelut {
     private ArrayList<Ottelu> ottelulista = new ArrayList<Ottelu>();
     private TreeMap<Double, Integer> ranking = new TreeMap<Double, Integer>(Collections.reverseOrder());
     
     
-    
+    /**
+     * @return listan otteluista
+     */
+    public ArrayList<Ottelu> getOttelulista() {
+        return this.ottelulista;
+    }
     
     
     /**
+     * Aliohjelma lisää ottelulistaan pelejä ja poistaa vanhimman pelin kun listan ennalta
+     * määritetty koko on täynnä
      * @param peli mikä ottelu lisätään listaan
+     * @example
+     * <pre name="test">
+     * #STATICIMPORT
+     * #import htSpike.*;
+     * Ottelut ottelut = new Ottelut();
+     * Ottelu peli1 = new Ottelu();
+     * Ottelu peli2 = new Ottelu();
+     * Ottelu peli3 = new Ottelu();
+     * Ottelu peli4 = new Ottelu();
+     * Ottelu peli5 = new Ottelu();
+     * ottelut.getOttelulista().size() === 0;
+     * ottelut.lisaa(peli1);
+     * ottelut.lisaa(peli2);
+     * ottelut.lisaa(peli3);
+     * Ottelu eka = ottelut.getOttelulista().get(0);
+     * ottelut.getOttelulista().size() === 3;
+     * ottelut.lisaa(peli4);
+     * ottelut.lisaa(peli5);
+     * ottelut.getOttelulista().size() === 3;
+     * eka === ottelut.getOttelulista().get(2);
+     * </pre>
      */
     public void lisaa(Ottelu peli) {
         this.ottelulista.add(0, peli);

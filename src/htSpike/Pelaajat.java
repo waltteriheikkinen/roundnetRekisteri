@@ -3,6 +3,11 @@
  */
 package htSpike;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 /**
  * @author waltt
  * @version 12.3.2023
@@ -12,6 +17,29 @@ public class Pelaajat {
     private Pelaaja[] lista = new Pelaaja[10];
     private int lkm = 0;
 
+    
+    /**
+     * @param hakemisto mihin tallennetaan
+     * @throws FileNotFoundException poikkeus
+     * Tiedoston muoto:
+     * 1|Heppu1|4|38|Oikea|Mies
+     * @example
+     * <pre name="test">
+     * 
+     * </pre>
+     */
+    public void tallenna(String hakemisto) throws FileNotFoundException {
+        File ftied = new File(hakemisto + "/pelaajat.dat");
+        try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))){
+            for (int i = 0; i < this.lkm; i++) {
+                Pelaaja pelaaja = this.annaPelaaja(i);
+                fo.println(pelaaja.toString());
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("Tiedosto " + ftied.getAbsolutePath() + " ei aukea!\n" + e.getMessage());
+        }
+    }
+    
     
     /**
      * @param pelaaja taulukkoon lisättävä pelaaja
@@ -107,8 +135,9 @@ public class Pelaajat {
     
     /**
      * @param args ei käytössä
+     * @throws FileNotFoundException poikkeus jos tiedostoa ei ole
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Pelaajat pelaajat = new Pelaajat();
         Pelaaja simo1 = new Pelaaja();
         Pelaaja simo2 = new Pelaaja();
@@ -127,7 +156,7 @@ public class Pelaajat {
         uusi.tulosta();
         System.out.println("================================");
         pelaajat.tulosta();
-        
+        pelaajat.tallenna("tallennustestit");
     
     }
 
