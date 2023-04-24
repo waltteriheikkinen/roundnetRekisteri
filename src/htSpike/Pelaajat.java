@@ -158,7 +158,7 @@ public class Pelaajat {
         
     }
     
-    
+       
     /**
      * @param args ei käytössä
      * @throws FileNotFoundException poikkeus jos tiedostoa ei ole

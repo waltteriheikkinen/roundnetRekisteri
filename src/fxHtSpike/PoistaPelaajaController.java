@@ -1,9 +1,15 @@
 package fxHtSpike;
 
-import fi.jyu.mit.fxgui.Dialogs;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
+import htSpike.Pelaaja;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 /**
  * Controlleri pelaajan poistamiselle
@@ -11,23 +17,26 @@ import javafx.scene.control.Button;
  * @version 24.2.2023
  *
  */
-public class PoistaPelaajaController implements ModalControllerInterface<String> {
+public class PoistaPelaajaController implements ModalControllerInterface<Pelaaja>, Initializable {
 
     @FXML private Button eiButton;
-
     @FXML private Button kyllaButton;
+    @FXML private TextField textNimi;
+    private Pelaaja poistettava;
+    private boolean poistetaanko = false;
 
     @FXML void handleEi() {
-        Dialogs.showMessageDialog("Vielä ei osata sanoa ei lol");
+        ModalController.closeStage(textNimi);
     }
 
     @FXML void handleKylla() {
-        Dialogs.showMessageDialog("Vielä ei osata poistaa pelaajaa");
+        this.poistetaanko = true;
+        ModalController.closeStage(textNimi);
     }
     
     @Override
-    public String getResult() {
-        // TODO Auto-generated method stub
+    public Pelaaja getResult() {
+        if (poistetaanko) return this.poistettava;
         return null;
     }
 
@@ -38,9 +47,19 @@ public class PoistaPelaajaController implements ModalControllerInterface<String>
     }
 
     @Override
-    public void setDefault(String oletus) {
-        // TODO Auto-generated method stub
-        
+    public void setDefault(Pelaaja oletus) {
+        this.poistettava = oletus;
+        laitaTeksti();
     }
-    //TODO
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        //
+    }
+    
+    //==========================================================================
+    
+    private void laitaTeksti() {
+        this.textNimi.setText(this.poistettava.getNimi());
+    }
 }

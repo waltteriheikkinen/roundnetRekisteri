@@ -36,6 +36,7 @@
                                  </BorderPane.margin>
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#HandleUusiPelaaja" text="Uusi pelaaja" />
+                                    <Button mnemonicParsing="false" onAction="#HandleMuokkaa" text="Muokkaa" />
                                     <Button mnemonicParsing="false" onAction="#HandleTallenna" text="Tallenna" />
                                     <Button mnemonicParsing="false" onAction="#HandlePoista" text="Poista" />
                                  </children>
@@ -130,12 +131,12 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </padding>
                                           </Label>
-                                          <TextField fx:id="tiedotNimi" text="Simo Siili" GridPane.columnIndex="1" />
-                                          <TextField fx:id="tiedotTaso" text="3" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <TextField fx:id="tiedotIka" text="23" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <TextField fx:id="tiedotSukupuoli" text="Mies" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <TextField fx:id="tiedotKatisyys" text="Oikea" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <TextField fx:id="tiedotRating" text="5,1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="tiedotNimi" editable="false" text="Simo Siili" GridPane.columnIndex="1" />
+                                          <TextField fx:id="tiedotTaso" editable="false" text="3" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="tiedotIka" editable="false" text="23" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="tiedotSukupuoli" editable="false" text="Mies" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="tiedotKatisyys" editable="false" text="Oikea" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="tiedotRating" editable="false" text="5,1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                        </children>
                                     </GridPane>
                                  </center>

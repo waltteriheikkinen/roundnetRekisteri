@@ -28,6 +28,7 @@ public class TiistaiSpikeMain extends Application {
             
             TiistaiSpike tiistaispike = new TiistaiSpike();
             tiistaispikeCtrl.setKerho(tiistaispike);
+            tiistaispikeCtrl.lueTiedosto("tiedostot");
             
         } catch(Exception e) {
             e.printStackTrace();

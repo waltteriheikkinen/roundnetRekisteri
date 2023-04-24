@@ -171,6 +171,20 @@ public class Pelaaja {
     }
     
     
+    /**
+     * @param s katisyys
+     */
+    public void setKatisyys(String s) {
+        this.katisyys = s;
+    }
+    
+    
+    /**
+     * @param s sukupuoli
+     */
+    public void setSukuPuoli(String s) {
+        this.sukupuoli = s;
+    }
     
     /**
      * @param args ei käytössä
@@ -182,6 +196,8 @@ public class Pelaaja {
         siili.setNimi("Simo Siili");
         siili.setTid(5);
         siili.setIka(26);
+        siili.setKatisyys("Oikea");
+        siili.setSukuPuoli("Mies");
         siili.tulosta();
         
         siili.luojotain();

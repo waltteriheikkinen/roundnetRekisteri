@@ -26,7 +26,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <TextField editable="false" GridPane.columnIndex="1">
+            <TextField fx:id="textNimi" editable="false" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="25.0" top="10.0" />
                </GridPane.margin>

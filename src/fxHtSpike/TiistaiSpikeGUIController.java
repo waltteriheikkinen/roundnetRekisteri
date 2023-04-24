@@ -2,6 +2,7 @@ package fxHtSpike;
 
 
 
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +53,7 @@ public class TiistaiSpikeGUIController implements Initializable{
     
     @FXML void HandleEteenPain() {
         if (tarkistaValitut()) {
-            ModalController.showModal(ParitSkabatController.class.getResource("ParitSkabat.fxml"), "Parien valinta", null, chooserValitut.getObjects());
+            ModalController.showModal(TiistaiSpikeGUIController.class.getResource("ParitSkabat.fxml"), "Parien valinta", null, chooserValitut.getObjects());
         }
         else Dialogs.showMessageDialog("Pelaajia täytyy olla vähintään 4 ja parillinen määrä!");
         return;
@@ -60,8 +61,9 @@ public class TiistaiSpikeGUIController implements Initializable{
 
     @FXML
     void HandlePoista() {
-        ModalController.showModal(TiistaiSpikeGUIController.class.getResource("PoistaPelaaja.fxml"), "Pelaajan poisto", null, "");
-        }
+        Pelaaja poistettava = chooserPelaajat.getSelectedObject();
+        ModalController.showModal(TiistaiSpikeGUIController.class.getResource("PoistaPelaaja.fxml"), "Pelaajan poisto", null, poistettava);
+    }
 
     @FXML
     void HandlePoistaPelaaja() {
@@ -70,14 +72,21 @@ public class TiistaiSpikeGUIController implements Initializable{
 
     @FXML
     void HandleTallenna() {
-        Dialogs.showMessageDialog("Vielä ei osata tallentaa pelaajaa");
+        tallenna();
     }
 
     @FXML
     void HandleUusiPelaaja() {
-        // ModalController.showModal(TiistaiSpikeGUIController.class.getResource("uusipelaaja.fxml"), "Uusi pelaaja", null, "");
-        uusiPelaaja();
+        UusiPelaajaController.uusiPelaaja(null, null);
+       // uusiPelaaja();
     }
+    
+    @FXML
+    void HandleMuokkaa() {
+        Pelaaja muokattava = chooserPelaajat.getSelectedObject();
+        if (MuokkaaPelaajaaController.kysyPelaaja(null, muokattava) == null) return; 
+        hae(muokattava.getId());
+        }
 
     @FXML
     void HandleValitsePelaaja() {
@@ -104,6 +113,29 @@ public class TiistaiSpikeGUIController implements Initializable{
         chooserValittavat.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE ) valitsePelaaja();});
         chooserValitut.setOnMouseClicked( e -> {if (e.getClickCount() == 2) poistaValittu();} );
         chooserValitut.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE ) poistaValittu();});
+    }
+    
+    
+    
+    /**
+     * @param hakemisto missä tiedot sijaitsevat
+     */
+    protected void lueTiedosto(String hakemisto) {
+        try {
+            tiistaispike.lueTiedostosta(hakemisto);
+            hae(0);
+        } catch (FileNotFoundException e) {
+            Dialogs.showMessageDialog("Ongelmia tiedoston kanssa");
+        }
+    }
+    
+    
+    private void tallenna() {
+        try {
+            tiistaispike.tallenna();
+        } catch (FileNotFoundException e) {
+            Dialogs.showMessageDialog("Ongelmia tiedoston kanssa");
+        }
     }
     
     
