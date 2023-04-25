@@ -14,7 +14,7 @@ import javafx.fxml.FXML;
 /**
  * @author waltt
  * @version 24.2.2023
- *
+ * TODO: 4 Arpominen kokoonaan
  */
 public class ArpomispopupController implements ModalControllerInterface<String> {
 
@@ -35,21 +35,21 @@ public class ArpomispopupController implements ModalControllerInterface<String> 
     
     @Override
     public String getResult() {
-        // TODO Auto-generated method stub
+        // 
         return null;
     }
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
+        // 
         
     }
 
     @Override
     public void setDefault(String oletus) {
-        // TODO Auto-generated method stub
+        // 
         
     }
-    //TODO
+    //
 
 }

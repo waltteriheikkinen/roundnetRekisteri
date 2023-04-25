@@ -26,7 +26,10 @@ import javafx.scene.layout.GridPane;
 /**
  * @author waltt
  * @version 22.2.2023
- *
+ * Controlleri koko ojelmalle
+ * TODO: 1a Uusi pelaaja ikkuna
+ * TODO: 1a Poista pelaaja ikkuna
+ * TODO: 1a etsi toiminto
  */
 public class TiistaiSpikeGUIController implements Initializable{
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
@@ -77,8 +80,11 @@ public class TiistaiSpikeGUIController implements Initializable{
 
     @FXML
     void HandleUusiPelaaja() {
-        UusiPelaajaController.uusiPelaaja(null, null);
-       // uusiPelaaja();
+        Pelaaja uusi = UusiPelaajaController.uusiPelaaja(null, null);
+        if (uusi == null) return;
+        uusi.rekisteroi();
+        tiistaispike.lisaa(uusi);
+        hae(uusi.getId());
     }
     
     @FXML
@@ -202,7 +208,7 @@ public class TiistaiSpikeGUIController implements Initializable{
         tiedotSukupuoli.setText(pelaajaKohdalla.getSukupuoli());
         tiedotKatisyys.setText(pelaajaKohdalla.getKatisyys());
         
-     //   Random rand = new Random(); //TODO: poista myöhemmin
+        //TODO: 2 hae rating/ranking tieto tietojen näyttöön
         tiedotRating.setText("");
     }
     

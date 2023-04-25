@@ -165,7 +165,7 @@ public class Pelaaja {
     /**
      * @param id pelaajan id
      */
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
         if (seuraavanro <= id) seuraavanro = id + 1;
     }
@@ -184,6 +184,15 @@ public class Pelaaja {
      */
     public void setSukuPuoli(String s) {
         this.sukupuoli = s;
+    }
+    
+    
+    /**
+     * ohjelma antaa pelaajalle jäsennumeron
+     */
+    public void rekisteroi() {
+        this.id = seuraavanro;
+        
     }
     
     /**
@@ -206,6 +215,8 @@ public class Pelaaja {
         
 
     }
+
+    
 
     
 

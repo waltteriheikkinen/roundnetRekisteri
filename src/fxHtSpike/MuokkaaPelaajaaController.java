@@ -31,12 +31,13 @@ public class MuokkaaPelaajaaController implements ModalControllerInterface<Pelaa
     
     @FXML void handlePeruuta() {
         ModalController.closeStage(textNimi);
-        //TODO: miks vitussa textnimi?
+        //TODO: 2 miks vitussa textnimi sulkemisessa?
     }
 
     @FXML
     void handleTallenna() {
         kasitteleMuutos();
+        //TODO: 2 Muutoksen käsittely toimivaksi pelaajan muokkauksen tallennuksessa
         this.muutos = true;
         ModalController.closeStage(textNimi);
     }
@@ -55,7 +56,7 @@ public class MuokkaaPelaajaaController implements ModalControllerInterface<Pelaa
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
+        // 
         
     }
 
@@ -71,7 +72,7 @@ public class MuokkaaPelaajaaController implements ModalControllerInterface<Pelaa
     
     
     
-    //TODO: Oikeellisuustarkistukset ja sama metodi muille osille
+    //TODO: 2 Oikeellisuustarkistukset ja sama metodi muille osille
     private void kasitteleMuutos() {
         if (muokattavapelaaja == null) return;
         this.muokattavapelaaja.setNimi(this.textNimi.getText());

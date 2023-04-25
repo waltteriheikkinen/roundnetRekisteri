@@ -42,7 +42,7 @@ public class PoistaPelaajaController implements ModalControllerInterface<Pelaaja
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
+        // 
         
     }
 

@@ -103,7 +103,7 @@ public class TiistaiSpike {
     
     /**
      * @throws FileNotFoundException poikkeus ongelmalle tiedoston kanssa
-     * TODO: Kopion ja muutoksien seuraamisen lisääminen?
+     * TODO: 3 Kopion ja muutoksien seuraaminen tallentaessa?
      */
     public void tallenna() throws FileNotFoundException {
         String virhe = "";

@@ -111,7 +111,9 @@ public class Ottelut {
      * Aliohjelma luo ranking listan
      */
     public void rankkaa() {
-        //TODO: korjaa oikein, nyt vain esimerkki
+        
+        
+        //TODO: 1 Rankinglistan muodostus!
         ranking.put(0.5, 1);
         ranking.put(0.9, 2);
         ranking.put(0.3, 3);

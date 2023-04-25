@@ -31,43 +31,72 @@ public class UusiPelaajaController implements ModalControllerInterface<Pelaaja>,
     @FXML private TextField textTaso;
     @FXML private TextField textSukuPuoli;
     @FXML private TextField textKatisyys;
+    private boolean muutos;
+    private Pelaaja uusipelaaja = new Pelaaja();
 
     @FXML void handlePeruuta() {
-        Dialogs.showMessageDialog("Vielä ei osata peruuttaa");
+        this.muutos = false;
+        ModalController.closeStage(textNimi);
+       // Dialogs.showMessageDialog("Vielä ei osata peruuttaa");
     }
 
     @FXML void handleTallenna() {
-        Dialogs.showMessageDialog("Vielä ei osata tallentaa pelaajaa");
+        kasitteleMuutos();
+        if (this.muutos) {
+            ModalController.closeStage(textNimi);
+        }
+        return;
+       // Dialogs.showMessageDialog("Vielä ei osata tallentaa pelaajaa");
     }
 
     
+    
+
     @Override
     public Pelaaja getResult() {
-        // TODO Auto-generated method stub
+        if (this.muutos) return this.uusipelaaja;
         return null;
     }
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
+        // 
         
     }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
+        // 
         
     }
 
     @Override
     public void setDefault(Pelaaja arg0) {
-        // TODO Auto-generated method stub
+        // 
         
     }
 
     
     //======================================================================================
     
+    
+    private void kasitteleMuutos() {
+       /*
+        for (TextField kentta : this.tekstit) {
+            if (kentta == null || kentta.getText() == "") {
+                Dialogs.showMessageDialog("Täytä kaikki kentät!");
+                this.muutos = false;
+                return;
+            }
+        }
+        */
+        this.uusipelaaja.setNimi(this.textNimi.getText());
+        this.uusipelaaja.setIka(Integer.parseInt(this.textIka.getText()));
+        this.uusipelaaja.setKatisyys(this.textKatisyys.getText());
+        this.uusipelaaja.setSukuPuoli(this.textSukuPuoli.getText());
+        this.uusipelaaja.setTid(Integer.parseInt(this.textTaso.getText()));
+        this.muutos = true;  
+    }
     
     
     /**
