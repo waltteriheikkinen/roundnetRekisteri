@@ -160,7 +160,7 @@
                      <children>
                         <BorderPane prefHeight="329.0" prefWidth="463.0">
                            <bottom>
-                              <HBox spacing="50.0" BorderPane.alignment="CENTER">
+                              <HBox spacing="20.0" BorderPane.alignment="CENTER">
                                  <BorderPane.margin>
                                     <Insets left="50.0" />
                                  </BorderPane.margin>
@@ -168,6 +168,7 @@
                                     <Button mnemonicParsing="false" onAction="#HandleValitsePelaaja" text="Valitse pelaaja" />
                                     <Button mnemonicParsing="false" onAction="#HandleEteenPain" text="Eteenpäin" />
                                     <Button mnemonicParsing="false" onAction="#HandlePoistaPelaaja" text="Poista Pelaaja" />
+                                    <Button mnemonicParsing="false" onAction="#HandleLuoOttelu" text="Luo ottelu" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

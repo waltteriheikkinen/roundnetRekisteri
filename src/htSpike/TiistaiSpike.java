@@ -121,6 +121,14 @@ public class TiistaiSpike {
         if (!"".equals(virhe)) throw new FileNotFoundException(virhe);
     }
     
+    
+    /**
+     * @param poistettava pelaaja joka poistetaan
+     */
+    public void poista(Pelaaja poistettava) {
+        this.pelaajat.poista(poistettava);
+    }
+    
 
     /**
      * @param args ei käytössä
@@ -145,6 +153,7 @@ public class TiistaiSpike {
             Pelaaja pelaaja = tiistaispike.annaPelaaja(i);
             pelaaja.tulosta();;
         }
+        
         
         tiistaispike.rankkaa();
         System.out.println(tiistaispike.getRanking().toString());

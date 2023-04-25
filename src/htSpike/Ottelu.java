@@ -56,9 +56,36 @@ public class Ottelu {
             this.pisteet[3] = rand.nextInt(20);
             this.pisteet[4] = rand.nextInt(20);
             this.pisteet[5] = 21;
+        }        
+    }
+    
+    /**
+     * Parametriton muodostaja
+     * @param pelaajat pelaajat jotka ovat ottelussa
+     */
+    public Ottelu(int[] pelaajat) {
+        Random rand = new Random();
+        this.parit[0] = pelaajat[0];
+        this.parit[1] = pelaajat[1];
+        this.parit[2] = pelaajat[2];
+        this.parit[3] = pelaajat[3];
+        
+        if (rand.nextBoolean()) {
+            this.pisteet[0] = 21;
+            this.pisteet[1] = rand.nextInt(20);
+            this.pisteet[2] = rand.nextInt(20);
+            this.pisteet[3] = 21;
+            this.pisteet[4] = 21;
+            this.pisteet[5] = rand.nextInt(20);
         }
-        
-        
+        else {
+            this.pisteet[0] = rand.nextInt(20);
+            this.pisteet[1] = 21;
+            this.pisteet[2] = 21;
+            this.pisteet[3] = rand.nextInt(20);
+            this.pisteet[4] = rand.nextInt(20);
+            this.pisteet[5] = 21;
+        }        
     }
     
     
@@ -252,8 +279,22 @@ public class Ottelu {
             this.pisteet[i] = Mjonot.erota(rivi, '|', this.pisteet[i]);
         }
     }
+    
+    
+    /**
+     * @return palauttaa pelaajalistan
+     */
+    public int[] getParit() {
+        return this.parit;
+    }
 
     
+    /**
+     * @return palauttaa pistelistan
+     */
+    public int[] getPisteet() {
+        return this.pisteet;
+    }
     
     /**
      * @param args ei käytössä

@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import fi.jyu.mit.fxgui.*;
+import htSpike.*;
 import htSpike.Pelaaja;
 import htSpike.TiistaiSpike;
 import javafx.fxml.FXML;
@@ -27,8 +28,6 @@ import javafx.scene.layout.GridPane;
  * @author waltt
  * @version 22.2.2023
  * Controlleri koko ojelmalle
- * TODO: 1a Uusi pelaaja ikkuna
- * TODO: 1a Poista pelaaja ikkuna
  * TODO: 1a etsi toiminto
  */
 public class TiistaiSpikeGUIController implements Initializable{
@@ -52,6 +51,15 @@ public class TiistaiSpikeGUIController implements Initializable{
         
     }
     
+    @FXML
+    void HandleLuoOttelu() {
+        List<Pelaaja> pelaajat = chooserValitut.getObjects();
+        int[] iideet = {pelaajat.get(0).getId(), pelaajat.get(1).getId(), pelaajat.get(2).getId(), pelaajat.get(3).getId()}; 
+        Ottelu ottelu = new Ottelu(iideet);
+        tiistaispike.lisaa(ottelu);
+        // ModalController.showModal(TiistaiSpikeGUIController.class.getResource("YksiOttelu.fxml"), "Ottelu", null, null);
+    }
+
     
     
     @FXML void HandleEteenPain() {
@@ -60,12 +68,15 @@ public class TiistaiSpikeGUIController implements Initializable{
         }
         else Dialogs.showMessageDialog("Pelaajia täytyy olla vähintään 4 ja parillinen määrä!");
         return;
-        }
+    }
 
     @FXML
     void HandlePoista() {
         Pelaaja poistettava = chooserPelaajat.getSelectedObject();
-        ModalController.showModal(TiistaiSpikeGUIController.class.getResource("PoistaPelaaja.fxml"), "Pelaajan poisto", null, poistettava);
+        if (PoistaPelaajaController.kysy(null,poistettava) == null) return;
+        tiistaispike.poista(poistettava);
+        int id = tiistaispike.annaPelaaja(0).getId();
+        hae(id);
     }
 
     @FXML

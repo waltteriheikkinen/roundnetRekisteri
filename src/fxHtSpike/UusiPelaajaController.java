@@ -6,7 +6,6 @@ package fxHtSpike;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import htSpike.Pelaaja;

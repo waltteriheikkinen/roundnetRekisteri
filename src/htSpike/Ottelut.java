@@ -109,17 +109,34 @@ public class Ottelut {
     
     /**
      * Aliohjelma luo ranking listan
+     * TODO: 3 taulukot mielellään mapeiksi
      */
     public void rankkaa() {
+        int[] ottelumaara = new int[this.ottelulista.size()*4];
+        int[] voitetut = new int[this.ottelulista.size()*2];
+        for (Ottelu ottelu : this.ottelulista) {
+            for(int pelaaja : ottelu.getParit()) {
+                ottelumaara[pelaaja] = ottelumaara[pelaaja] + 1;
+            }            
+            if (ottelu.voittaja() == 1) {
+                voitetut[ottelu.getParit()[0]]++;
+                voitetut[ottelu.getParit()[1]]++;
+            }
+            if (ottelu.voittaja() == 2) {
+                voitetut[ottelu.getParit()[2]]++;
+                voitetut[ottelu.getParit()[3]]++;
+            }
+        }
         
-        
-        //TODO: 1 Rankinglistan muodostus!
-        ranking.put(0.5, 1);
-        ranking.put(0.9, 2);
-        ranking.put(0.3, 3);
-        ranking.put(0.6, 4);
-        ranking.put(0.1, 5);
-
+        double[] voittoratio = new double[this.ottelulista.size()*4];
+        for (int i = 1; i < ottelumaara.length; i++) {
+            if (ottelumaara[i] > 0) {
+                voittoratio[i] = voitetut[i] / ottelumaara[i];
+            }
+        }
+        for (int i = 1; i < voittoratio.length; i++) {
+            if (voittoratio[i] > 0) this.ranking.put(voittoratio[i], i);
+        }
     }
     
     
@@ -147,17 +164,15 @@ public class Ottelut {
         }
         
         
-        int[] pelaajat = {1,0,0,0};
+        int[] pelaajat = {1,2,3,4};
         int[] tulos = {1,2,3,4,5,6};
         Ottelu peli1 = new Ottelu(pelaajat, tulos);
         ottelut.lisaa(peli1);
-        
-        
-        pelaajat[0] = 2;
+
         Ottelu peli2 = new Ottelu(pelaajat, tulos);
         ottelut.lisaa(peli2);
         
-        pelaajat[0] = 3;
+        
         Ottelu peli3 = new Ottelu(pelaajat, tulos);
         ottelut.lisaa(peli3);
         

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * Controlleri pelaajan poistamiselle
@@ -61,5 +62,15 @@ public class PoistaPelaajaController implements ModalControllerInterface<Pelaaja
     
     private void laitaTeksti() {
         this.textNimi.setText(this.poistettava.getNimi());
+    }
+
+    /**
+     * @param modalitystage mikä stage
+     * @param poistettava poistettava pelaaja
+     * @return Pelaaja
+     */
+    public static Pelaaja kysy(Stage modalitystage, Pelaaja poistettava) {
+        return ModalController.showModal(TiistaiSpikeGUIController.class.getResource("PoistaPelaaja.fxml"), "Pelaajan poisto", modalitystage, poistettava);
+        
     }
 }
