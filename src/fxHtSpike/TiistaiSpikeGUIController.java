@@ -64,7 +64,11 @@ public class TiistaiSpikeGUIController implements Initializable{
     
     @FXML void HandleEteenPain() {
         if (tarkistaValitut()) {
-            ModalController.showModal(TiistaiSpikeGUIController.class.getResource("ParitSkabat.fxml"), "Parien valinta", null, chooserValitut.getObjects());
+            List<Pelaaja> parit = ParitSkabatController.luoPariLista(null, chooserValitut.getObjects());
+            
+            OttelutTuloksetController.luoOttelulista(null, parit);
+            
+            
         }
         else Dialogs.showMessageDialog("Pelaajia täytyy olla vähintään 4 ja parillinen määrä!");
         return;
@@ -91,6 +95,7 @@ public class TiistaiSpikeGUIController implements Initializable{
 
     @FXML
     void HandleUusiPelaaja() {
+        uusiPelaaja();
         Pelaaja uusi = UusiPelaajaController.uusiPelaaja(null, null);
         if (uusi == null) return;
         uusi.rekisteroi();
@@ -130,6 +135,7 @@ public class TiistaiSpikeGUIController implements Initializable{
         chooserValittavat.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE ) valitsePelaaja();});
         chooserValitut.setOnMouseClicked( e -> {if (e.getClickCount() == 2) poistaValittu();} );
         chooserValitut.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE ) poistaValittu();});
+        
     }
     
     
@@ -196,14 +202,16 @@ public class TiistaiSpikeGUIController implements Initializable{
     private void paivitaRanking() {
         gridRanking.clear();
         tiistaispike.rankkaa();
-        TreeMap<Double, Integer> ranking = tiistaispike.getRanking();        
+        TreeMap<Integer, Double> ranking = tiistaispike.getRanking();        
         int i = 1;
-        for (Map.Entry<Double, Integer> entry : ranking.entrySet()) {
-            String nimi = tiistaispike.getPelaaja(entry.getValue()).getNimi();
-            String[] rivi = {Integer.toString(i), nimi, entry.getKey().toString()};
+        for (Map.Entry<Integer, Double> entry : ranking.entrySet()) {
+            String nimi = tiistaispike.getPelaaja(entry.getKey()).getNimi();
+            String[] rivi = {Integer.toString(i), nimi, entry.getValue().toString()};
             gridRanking.add(rivi);
             i++;
         }
+        
+        
         
     }
     

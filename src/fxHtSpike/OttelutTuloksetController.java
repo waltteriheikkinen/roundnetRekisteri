@@ -6,6 +6,7 @@ package fxHtSpike;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.Dialogs;
@@ -18,13 +19,14 @@ import htSpike.Pelaaja;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 
 /**
  * @author waltt
  * @version 24.2.2023
  * Kontrolleri ohjaa otteluiden tulosten merkkaamista ja tallentamista
- * TODO: 1 Miten pääsen luomaan ottelut listaan??
+ * TODO: 1 Miten pääsen luomaan ottelut listaan?? Palauta paritskabat controllerista pelaajalista ja luo ottelut seuraavaan mentäessä.
  */
 public class OttelutTuloksetController implements ModalControllerInterface<ArrayList<Pelaaja>>, Initializable {
 
@@ -32,6 +34,7 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
     @FXML private Button tallennaJaLopetaButton;
     @FXML private StringGrid<Object> gridOttelut;
     private ArrayList<Pelaaja> parit;
+    private List<Ottelu> ottelut;
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -117,6 +120,7 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
             System.out.println(Arrays.toString(matsinParit));
             Ottelu ottelu = new Ottelu(matsinParit, pisteet);
             ottelu.tulosta(System.out);
+           
         }
         
     }
@@ -206,6 +210,15 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
         System.out.println(pelaaja3);
         System.out.println(pelaaja4);        
         return pelaajaId;
+    }
+
+    /**
+     * @param modalitystage mikä stage
+     * @param oletus parametrit
+     * @return pelaajalista
+     */
+    public static List<Pelaaja> luoOttelulista(Stage modalitystage, List<Pelaaja> oletus) {
+        return ModalController.showModal(ParitSkabatController.class.getResource("OttelutTulokset.fxml"), "Ottelut ja tulokset", modalitystage, oletus);
     }
 
     

@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -20,7 +19,7 @@ import java.util.TreeMap;
  */
 public class Ottelut {
     private ArrayList<Ottelu> ottelulista = new ArrayList<Ottelu>();
-    private TreeMap<Double, Integer> ranking = new TreeMap<Double, Integer>(Collections.reverseOrder());
+    private TreeMap<Integer, Double> ranking = new TreeMap<Integer, Double>();
     
     
     /**
@@ -112,6 +111,7 @@ public class Ottelut {
      * TODO: 3 taulukot mielellään mapeiksi
      */
     public void rankkaa() {
+        /*
         int[] ottelumaara = new int[this.ottelulista.size()*4];
         int[] voitetut = new int[this.ottelulista.size()*2];
         for (Ottelu ottelu : this.ottelulista) {
@@ -137,13 +137,24 @@ public class Ottelut {
         for (int i = 1; i < voittoratio.length; i++) {
             if (voittoratio[i] > 0) this.ranking.put(voittoratio[i], i);
         }
+        */
+        
+        this.ranking.put(1, 0.4 );
+        this.ranking.put(2, 0.6);
+        this.ranking.put(3, 0.3);
+        this.ranking.put(4, 0.8);
+        this.ranking.put(5, 0.95);
+        this.ranking.put(6, 0.7);
+        this.ranking.put(7, 0.15);
+        this.ranking.put(8, 0.45);
+        
     }
     
     
     /**
      * @return palauttaa otteluista muodostetun ranking listan
      */
-    public TreeMap<Double, Integer> getRanking(){
+    public TreeMap<Integer, Double> getRanking(){
         return this.ranking;
     }
     

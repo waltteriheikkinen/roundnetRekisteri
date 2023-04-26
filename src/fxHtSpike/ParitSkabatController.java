@@ -14,6 +14,7 @@ import htSpike.Pelaaja;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 
 /**
@@ -31,6 +32,7 @@ public class ParitSkabatController implements ModalControllerInterface<List<Pela
     @FXML private StringGrid<Pelaaja> gridParit;
     @FXML private ListChooser<Pelaaja> chooserValitut;
     private List<Pelaaja> valitut;
+    private List<Pelaaja> parit = new ArrayList<Pelaaja>();
     private List<Pelaaja> listaChooser = new ArrayList<Pelaaja>();
 
     
@@ -40,8 +42,7 @@ public class ParitSkabatController implements ModalControllerInterface<List<Pela
 
     @FXML void handleHyvaksy() {
         if (tarkistaParit()) {
-            ArrayList<Pelaaja> parit = luoParit();
-            ModalController.showModal(ParitSkabatController.class.getResource("OttelutTulokset.fxml"), "Ottelut ja tulokset", null, parit);
+            luoParit();
             ModalController.closeStage(hyvaksyButton);
         }
         else Dialogs.showMessageDialog("Muodosta kaikki parit!");
@@ -61,6 +62,7 @@ public class ParitSkabatController implements ModalControllerInterface<List<Pela
     
     @Override
     public List<Pelaaja> getResult() {
+        if (tarkistaParit()) return this.parit;
         return null;
     }
 
@@ -99,8 +101,7 @@ public class ParitSkabatController implements ModalControllerInterface<List<Pela
     }
     
     
-    private ArrayList<Pelaaja> luoParit() {
-        ArrayList<Pelaaja> parit = new ArrayList<Pelaaja>();
+    private void luoParit() {
         for (int i = 0; i < this.valitut.size() / 2; i++) {
             for (int j = 1; j <= 2; j++) {
                 String nimi = gridParit.get(i, j);
@@ -111,10 +112,9 @@ public class ParitSkabatController implements ModalControllerInterface<List<Pela
                         break;
                     }
                 }
-                parit.add(pelaaja);
+                this.parit.add(pelaaja);
             }
         }
-        return parit;
     }
     
     
@@ -172,5 +172,15 @@ public class ParitSkabatController implements ModalControllerInterface<List<Pela
         for (Pelaaja pelaaja : this.listaChooser) {
             this.chooserValitut.add(pelaaja.getNimi(), pelaaja);
         }
+    }
+
+    /**
+     * @param modalitystage mikä stage
+     * @param oletus paramtetrit
+     * @return pelaajat listattuna pareittain
+     */
+    public static List<Pelaaja> luoPariLista(Stage modalitystage, List<Pelaaja> oletus) {
+        return ModalController.showModal(TiistaiSpikeGUIController.class.getResource("ParitSkabat.fxml"), "Parien valinta", modalitystage, oletus);
+        
     }
 }

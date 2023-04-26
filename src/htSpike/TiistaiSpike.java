@@ -31,7 +31,7 @@ public class TiistaiSpike {
     /**
      * @return palauttaa otteluiden ranking listan
      */
-    public TreeMap<Double, Integer> getRanking(){
+    public TreeMap<Integer, Double> getRanking(){
         return this.ottelut.getRanking();
     }
     
