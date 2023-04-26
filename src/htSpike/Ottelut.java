@@ -102,7 +102,7 @@ public class Ottelut {
      */
     public void lisaa(Ottelu peli) {
         this.ottelulista.add(0, peli);
-        if (this.ottelulista.size() > 10) this.ottelulista.remove(10);
+        if (this.ottelulista.size() > 30) this.ottelulista.remove(30);
     }
     
     
@@ -111,9 +111,10 @@ public class Ottelut {
      * TODO: 3 taulukot mielellään mapeiksi
      */
     public void rankkaa() {
-        /*
+        
         int[] ottelumaara = new int[this.ottelulista.size()*4];
         int[] voitetut = new int[this.ottelulista.size()*2];
+        
         for (Ottelu ottelu : this.ottelulista) {
             for(int pelaaja : ottelu.getParit()) {
                 ottelumaara[pelaaja] = ottelumaara[pelaaja] + 1;
@@ -131,14 +132,16 @@ public class Ottelut {
         double[] voittoratio = new double[this.ottelulista.size()*4];
         for (int i = 1; i < ottelumaara.length; i++) {
             if (ottelumaara[i] > 0) {
-                voittoratio[i] = voitetut[i] / ottelumaara[i];
+                double voitot = voitetut[i];
+                double kaikki = ottelumaara[i];
+                voittoratio[i] = voitot / kaikki;
             }
         }
         for (int i = 1; i < voittoratio.length; i++) {
-            if (voittoratio[i] > 0) this.ranking.put(voittoratio[i], i);
+            if (voittoratio[i] > 0) this.ranking.put(i, voittoratio[i]);
         }
-        */
         
+        /*
         this.ranking.put(1, 0.4 );
         this.ranking.put(2, 0.6);
         this.ranking.put(3, 0.3);
@@ -147,7 +150,7 @@ public class Ottelut {
         this.ranking.put(6, 0.7);
         this.ranking.put(7, 0.15);
         this.ranking.put(8, 0.45);
-        
+        */
     }
     
     

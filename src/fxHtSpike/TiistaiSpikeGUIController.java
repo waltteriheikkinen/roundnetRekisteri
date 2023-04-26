@@ -4,6 +4,7 @@ package fxHtSpike;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,14 +66,11 @@ public class TiistaiSpikeGUIController implements Initializable{
         if (tarkistaValitut()) {
             List<Pelaaja> parit = ParitSkabatController.luoPariLista(null, chooserValitut.getObjects());
             List<Ottelu> ottelut = luoOttelut(parit);
-         //   for (Ottelu ottelu : ottelut) {
-         //       ottelu.tulosta(System.out);
-         //   }
-            
             List<Ottelu> pelatutottelut = OttelutTuloksetController.syotaTulokset(null, ottelut);
             for (Ottelu ottelu : pelatutottelut) {
                 tiistaispike.lisaa(ottelu);
             }
+            tallenna();
         }
         else Dialogs.showMessageDialog("Pelaajia täytyy olla vähintään 4 ja parillinen määrä!");
         return;
@@ -136,6 +134,7 @@ public class TiistaiSpikeGUIController implements Initializable{
         chooserValittavat.clear();
         chooserValitut.clear();
         gridRanking.setSortable(-1, false);
+        
         chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
         chooserValittavat.setOnMouseClicked( e -> {if (e.getClickCount() == 2)  valitsePelaaja();} );
         chooserValittavat.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE ) valitsePelaaja();});
@@ -222,11 +221,13 @@ public class TiistaiSpikeGUIController implements Initializable{
     private void paivitaRanking() {
         gridRanking.clear();
         tiistaispike.rankkaa();
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
         TreeMap<Integer, Double> ranking = tiistaispike.getRanking();        
         int i = 1;
         for (Map.Entry<Integer, Double> entry : ranking.entrySet()) {
             String nimi = tiistaispike.getPelaaja(entry.getKey()).getNimi();
-            String[] rivi = {Integer.toString(i), nimi, entry.getValue().toString()};
+            String ratio = decimalFormat.format(entry.getValue());
+            String[] rivi = {Integer.toString(i), nimi, ratio};
             gridRanking.add(rivi);
             i++;
         }
