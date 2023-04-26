@@ -4,6 +4,7 @@ package fxHtSpike;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -11,8 +12,6 @@ import java.util.TreeMap;
 
 import fi.jyu.mit.fxgui.*;
 import htSpike.*;
-import htSpike.Pelaaja;
-import htSpike.TiistaiSpike;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
@@ -65,14 +64,21 @@ public class TiistaiSpikeGUIController implements Initializable{
     @FXML void HandleEteenPain() {
         if (tarkistaValitut()) {
             List<Pelaaja> parit = ParitSkabatController.luoPariLista(null, chooserValitut.getObjects());
+            List<Ottelu> ottelut = luoOttelut(parit);
+         //   for (Ottelu ottelu : ottelut) {
+         //       ottelu.tulosta(System.out);
+         //   }
             
-            OttelutTuloksetController.luoOttelulista(null, parit);
-            
-            
+            List<Ottelu> pelatutottelut = OttelutTuloksetController.syotaTulokset(null, ottelut);
+            for (Ottelu ottelu : pelatutottelut) {
+                tiistaispike.lisaa(ottelu);
+            }
         }
         else Dialogs.showMessageDialog("Pelaajia täytyy olla vähintään 4 ja parillinen määrä!");
         return;
     }
+
+    
 
     @FXML
     void HandlePoista() {
@@ -136,6 +142,20 @@ public class TiistaiSpikeGUIController implements Initializable{
         chooserValitut.setOnMouseClicked( e -> {if (e.getClickCount() == 2) poistaValittu();} );
         chooserValitut.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE ) poistaValittu();});
         
+    }
+    
+    
+    private List<Ottelu> luoOttelut(List<Pelaaja> parit) {
+        List<Ottelu> ottelut = new ArrayList<Ottelu>();
+        
+        for (int i = 0; i < parit.size(); i = i + 2) {
+            for (int j = i + 2; j < parit.size(); j = j + 2 ) {
+            int[] pelaajat = {parit.get(i).getId(), parit.get(i+1).getId(), parit.get(j).getId(), parit.get(j+1).getId()}; 
+            int[] tulos = {0,0,0,0,0,0};
+            ottelut.add(new Ottelu(pelaajat, tulos));
+            }
+        }
+        return ottelut;
     }
     
     

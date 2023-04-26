@@ -5,7 +5,6 @@ package fxHtSpike;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -26,15 +25,16 @@ import javafx.stage.Stage;
  * @author waltt
  * @version 24.2.2023
  * Kontrolleri ohjaa otteluiden tulosten merkkaamista ja tallentamista
- * TODO: 1 Miten pääsen luomaan ottelut listaan?? Palauta paritskabat controllerista pelaajalista ja luo ottelut seuraavaan mentäessä.
+ * TODO: Listaan pelaajien nimet vielä
  */
-public class OttelutTuloksetController implements ModalControllerInterface<ArrayList<Pelaaja>>, Initializable {
+public class OttelutTuloksetController implements ModalControllerInterface<ArrayList<Ottelu>>, Initializable {
 
     @FXML private Button peruutaButton;
     @FXML private Button tallennaJaLopetaButton;
     @FXML private StringGrid<Object> gridOttelut;
     private ArrayList<Pelaaja> parit;
     private List<Ottelu> ottelut;
+    private ArrayList<Ottelu> pelatut = new ArrayList<Ottelu>();
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -47,15 +47,13 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
 
     @FXML void handleTallennaJaLopeta() {
         tallennaOttelut();
-        //TODO: 2 tallenna tiedostoon metodi ja tarkista sulkeminen
         ModalController.closeStage(tallennaJaLopetaButton);
     }
 
     
     @Override
-    public ArrayList<Pelaaja> getResult() {
-        // 
-        return null;
+    public ArrayList<Ottelu> getResult() {
+        return this.pelatut;
     }
 
     @Override
@@ -65,8 +63,8 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
 
 
     @Override
-    public void setDefault(ArrayList<Pelaaja> parit) {
-        this.parit = parit;
+    public void setDefault(ArrayList<Ottelu> ottelut) {
+        this.ottelut = ottelut;
         alusta();
     }
     
@@ -85,16 +83,12 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
     }
     
     
+
     private void luoOttelut() {
-        String[] otteluparit = new String[this.parit.size()/2];
-        for (int i = 0; i < this.parit.size(); i = i + 2) {
-            otteluparit[i/2] = this.parit.get(i).getNimi() + "&" + this.parit.get(i + 1).getNimi();
-        }
-        for (int i = 0; i < otteluparit.length; i++) {
-            for (int j = i + 1; j < otteluparit.length; j++ ) {
-            String[] rivi = {otteluparit[i] + "  VS  " + otteluparit[j], "","",""};
-            gridOttelut.add(rivi);
-            }
+        for (Ottelu ottelu : this.ottelut) {
+            String otteluparit = ottelu.getParit()[0] + "&" + ottelu.getParit()[1] + "  VS  " + ottelu.getParit()[2] + "&" + ottelu.getParit()[0];
+            String[] rivi = {otteluparit, "","",""};
+            this.gridOttelut.add(rivi);
         }
     }
     
@@ -102,6 +96,24 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
      * Aliohjelma tallentaa ottelut
      */
     private void tallennaOttelut() {
+        int rivit = this.ottelut.size();
+        String[] erat = new String[3];
+        
+        for (int i = 0; i < rivit; i++) {
+            for (int j = 1; j <= erat.length; j++) {
+                if (j == 1) erat[0] = this.gridOttelut.get(i, j);
+                if (j == 2) erat[1] = this.gridOttelut.get(i, j);
+                if (j == 3) erat[2] = this.gridOttelut.get(i, j);
+            }
+            int[] pisteet = kasitteleErat(erat);
+            if (tarkistapisteet(pisteet)) {
+                int[] pelatunparit = this.ottelut.get(i).getParit();
+                this.pelatut.add(new Ottelu(pelatunparit, pisteet));
+            }
+            
+        }
+        
+        /*
         int n = this.parit.size()/2;
         int rivit = n * ( n - 1 ) / 2;
         String[] erat = new String[3];
@@ -120,12 +132,24 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
             System.out.println(Arrays.toString(matsinParit));
             Ottelu ottelu = new Ottelu(matsinParit, pisteet);
             ottelu.tulosta(System.out);
-           
-        }
+            
+            */
         
     }
     
     
+    private boolean tarkistapisteet(int[] pisteet) {
+        int summa = 0;
+        for (int i = 0; i < pisteet.length; i++) {
+            if (pisteet[i] < 0) return false;
+            summa = summa + pisteet[i];
+        }
+        if (summa <= 0) return false;
+        return true;
+    }
+
+    
+    //TODO: 2 Oikeellusuustarkistukset numeroille
     /**
      * @param erat erien pisteet merkkijonoina
      * @return taulukon jossa on erien tulokset int lukuina
@@ -144,7 +168,7 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
         int[] tulos = new int[6];
         int i = 0;
         for (String era : erat) {
-            if (era == null || era == "") {
+            if (era == null || era.equals("")) {
                 i = i + 2;
                 continue;
             }
@@ -217,7 +241,7 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
      * @param oletus parametrit
      * @return pelaajalista
      */
-    public static List<Pelaaja> luoOttelulista(Stage modalitystage, List<Pelaaja> oletus) {
+    public static List<Ottelu> syotaTulokset(Stage modalitystage, List<Ottelu> oletus) {
         return ModalController.showModal(ParitSkabatController.class.getResource("OttelutTulokset.fxml"), "Ottelut ja tulokset", modalitystage, oletus);
     }
 
