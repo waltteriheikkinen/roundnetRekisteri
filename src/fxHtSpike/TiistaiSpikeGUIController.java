@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.*;
+import fi.jyu.mit.ohj2.Mjonot;
 import htSpike.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,8 +30,8 @@ import javafx.scene.layout.GridPane;
  * @version 22.2.2023
  * Controlleri koko ojelmalle
  * TODO: 3 Lisää etsi toimintoja
- * TODO: 3 Järjestä jäsenet aakkosjärjestykseen
- * TODO: 2 Korjaa rankinglistan päivitys uusien otteluiden jälkeen
+ * TODO: 4 Järjestä jäsenet aakkosjärjestykseen
+ * TODO: 3 otteluiden luomisessa haku ei toimi
  */
 public class TiistaiSpikeGUIController implements Initializable{
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
@@ -38,7 +39,9 @@ public class TiistaiSpikeGUIController implements Initializable{
     @FXML private ListChooser<Pelaaja> chooserValitut;
     @FXML private StringGrid<Object> gridRanking;
     @FXML private ComboBoxChooser<String> boxChooserHakuEhto;
+    @FXML private ComboBoxChooser<String> boxChooserHakuEhto2;
     @FXML private TextField textHakuEhto;
+    @FXML private TextField textHakuEhto2;
     @FXML private Tab tabRanking;
     @FXML private GridPane gridPelaaja;
     @FXML private BorderPane borderPelaaja;
@@ -58,8 +61,13 @@ public class TiistaiSpikeGUIController implements Initializable{
     
     
     @FXML void HandleHakuEhto() {
-        hae(0);
+        hae(0, this.chooserPelaajat, this.textHakuEhto);
     }
+    
+    @FXML void HandleHakuEhto2() {
+        hae(0, this.chooserValittavat, this.textHakuEhto2);
+    }
+
     
     @FXML
     void HandleLuoOttelu() {
@@ -72,12 +80,16 @@ public class TiistaiSpikeGUIController implements Initializable{
 
     
     
+    @SuppressWarnings("unchecked")
     @FXML void HandleEteenPain() {
         if (tarkistaValitut()) {
             List<Pelaaja> parit = ParitSkabatController.luoPariLista(null, chooserValitut.getObjects());
-            List<Ottelu> ottelut = luoOttelut(parit);
-            List<Ottelu> pelatutottelut = OttelutTuloksetController.syotaTulokset(null, ottelut);
-            for (Ottelu ottelu : pelatutottelut) {
+            
+            Object[] ottelutjanimet = luoOttelut(parit);
+            
+            Object[] pelatutottelut = OttelutTuloksetController.syotaTulokset(null, ottelutjanimet);
+            List<Ottelu> tulokset = (List<Ottelu>) pelatutottelut[0];
+            for (Ottelu ottelu : tulokset) {
                 tiistaispike.lisaa(ottelu);
             }
             tallenna();
@@ -153,17 +165,26 @@ public class TiistaiSpikeGUIController implements Initializable{
     }
     
     
-    private List<Ottelu> luoOttelut(List<Pelaaja> parit) {
+    private Object[] luoOttelut(List<Pelaaja> parit) {
         List<Ottelu> ottelut = new ArrayList<Ottelu>();
+        List<String> pelaajalista = new ArrayList<String>();
+        Object[] ottelutjapelaajat = new Object[2];
         
         for (int i = 0; i < parit.size(); i = i + 2) {
             for (int j = i + 2; j < parit.size(); j = j + 2 ) {
             int[] pelaajat = {parit.get(i).getId(), parit.get(i+1).getId(), parit.get(j).getId(), parit.get(j+1).getId()}; 
+            String pelaajatString = Mjonot.erota(new StringBuilder(parit.get(i).getNimi())) + " & " +
+                                    Mjonot.erota(new StringBuilder(parit.get(i+1).getNimi())) + "  -VS-  " +
+                                    Mjonot.erota(new StringBuilder(parit.get(j).getNimi())) + " & " + 
+                                    Mjonot.erota(new StringBuilder(parit.get(j+1).getNimi()));
             int[] tulos = {0,0,0,0,0,0};
             ottelut.add(new Ottelu(pelaajat, tulos));
+            pelaajalista.add(pelaajatString);
             }
         }
-        return ottelut;
+        ottelutjapelaajat[0] = ottelut;
+        ottelutjapelaajat[1] = pelaajalista;
+        return ottelutjapelaajat;
     }
     
     
@@ -274,6 +295,7 @@ public class TiistaiSpikeGUIController implements Initializable{
     /**
      * Luodaan uusi pelaaja
      */
+    /*
     private void uusiPelaaja() {
         Pelaaja uusi = new Pelaaja();
         uusi.luojotain();
@@ -281,26 +303,29 @@ public class TiistaiSpikeGUIController implements Initializable{
         tiistaispike.lisaa(uusi);
         hae(uusi.getId());
     }
+    */
     
     
     /**
      * 
      * @param id pelaajan jäsennumero
      */
-    private void hae(int id) {
-        chooserPelaajat.clear();
-        chooserValittavat.clear();
-        String ehto = this.textHakuEhto.getText();
+    private void hae(int id, ListChooser<Pelaaja> chooseri, TextField hakuehto) {
+        chooseri.clear();
+        String ehto = hakuehto.getText();
         int index = 0;
         for (int i = 0; i < tiistaispike.getPelaajia(); i++) {
             Pelaaja pelaaja = tiistaispike.annaPelaaja(i);
             if (pelaaja.getId() == id) index = i;
             if (!pelaaja.getNimi().toLowerCase().contains(ehto.toLowerCase())) continue;
-            chooserPelaajat.add(pelaaja.getNimi(), pelaaja);
-            chooserValittavat.add(pelaaja.getNimi(), pelaaja);
+            chooseri.add(pelaaja.getNimi(), pelaaja);
         }
-        chooserPelaajat.setSelectedIndex(index);
-      //chooserPelaajatSkabat.setSelectedIndex(index);
+        chooseri.setSelectedIndex(index);
+    }
+    
+    private void hae(int id) {
+        hae(id, this.chooserPelaajat, this.textHakuEhto);
+        hae(id, this.chooserValittavat, this.textHakuEhto2);
     }
 
     

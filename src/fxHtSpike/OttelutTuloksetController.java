@@ -14,6 +14,7 @@ import fi.jyu.mit.fxgui.ModalControllerInterface;
 import fi.jyu.mit.fxgui.StringGrid;
 import fi.jyu.mit.ohj2.Mjonot;
 import htSpike.Ottelu;
+import htSpike.Pelaaja;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -24,15 +25,17 @@ import javafx.stage.Stage;
  * @author waltt
  * @version 24.2.2023
  * Kontrolleri ohjaa otteluiden tulosten merkkaamista ja tallentamista
- * TODO: 2 Listaan pelaajien nimet vielä. Esim Stringien vieminen voi toimia
  */
-public class OttelutTuloksetController implements ModalControllerInterface<ArrayList<Ottelu>>, Initializable {
+public class OttelutTuloksetController implements ModalControllerInterface<Object[]>, Initializable {
 
     @FXML private Button peruutaButton;
     @FXML private Button tallennaJaLopetaButton;
     @FXML private StringGrid<Object> gridOttelut;
     private List<Ottelu> ottelut;
-    private ArrayList<Ottelu> pelatut = new ArrayList<Ottelu>();
+    private List<String> pelaajat;
+    private List<Ottelu> pelatutlista = new ArrayList<Ottelu>();
+    private Object[] pelatut = {new ArrayList<Ottelu>(), new ArrayList<Pelaaja>()};
+    
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -45,12 +48,13 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
 
     @FXML void handleTallennaJaLopeta() {
         tallennaOttelut();
+        this.pelatut[0] = this.pelatutlista;
         ModalController.closeStage(tallennaJaLopetaButton);
     }
 
     
     @Override
-    public ArrayList<Ottelu> getResult() {
+    public Object[] getResult() {
         return this.pelatut;
     }
 
@@ -60,9 +64,11 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
     }
 
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void setDefault(ArrayList<Ottelu> ottelut) {
-        this.ottelut = ottelut;
+    public void setDefault(Object[] ottelut) {
+        this.ottelut = (List<Ottelu>) ottelut[0];
+        this.pelaajat = (List<String>) ottelut[1];
         alusta();
     }
     
@@ -71,21 +77,16 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
     private void alusta() {
         gridOttelut.setSortable(-1, false);
         gridOttelut.clear();
-        luoOttelut();
-                
+        gridOttelut.getSelectionModel().setCellSelectionEnabled(true);
         gridOttelut.setColumnWidth(0, 300);
-     //   gridOttelut.setColumnWidth(1,60);
-     //   gridOttelut.setColumnWidth(2,60);
-     //   gridOttelut.setColumnWidth(3,60);
-        
+        luoOttelut();
     }
     
     
 
     private void luoOttelut() {
-        for (Ottelu ottelu : this.ottelut) {
-            String otteluparit = ottelu.getParit()[0] + "&" + ottelu.getParit()[1] + "  VS  " + ottelu.getParit()[2] + "&" + ottelu.getParit()[3];
-            String[] rivi = {otteluparit, "","",""};
+        for (String parit : this.pelaajat) {
+            String[] rivi = {parit, "","",""};
             this.gridOttelut.add(rivi);
         }
     }
@@ -106,7 +107,7 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
             int[] pisteet = kasitteleErat(erat);
             if (tarkistapisteet(pisteet)) {
                 int[] pelatunparit = this.ottelut.get(i).getParit();
-                this.pelatut.add(new Ottelu(pelatunparit, pisteet));
+                this.pelatutlista.add(new Ottelu(pelatunparit, pisteet));
             }
         }
         
@@ -149,7 +150,7 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
         int[] tulos = new int[6];
         int i = 0;
         for (String era : erat) {
-            if (era == null || era.equals("")) {
+            if (era == null || era.equals("") || !era.contains("-")) {
                 i = i + 2;
                 continue;
             }
@@ -169,7 +170,7 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
      * @param oletus parametrit
      * @return pelaajalista
      */
-    public static List<Ottelu> syotaTulokset(Stage modalitystage, List<Ottelu> oletus) {
+    public static Object[] syotaTulokset(Stage modalitystage, Object[] oletus) {
         return ModalController.showModal(ParitSkabatController.class.getResource("OttelutTulokset.fxml"), "Ottelut ja tulokset", modalitystage, oletus);
     }
 

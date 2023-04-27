@@ -191,13 +191,10 @@
                                              </columnConstraints>
                                              <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <ComboBoxChooser prefHeight="25.0" promptText="Hakuehto 1" rivit="Nimi&#10;Taso&#10;Sukupuoli&#10;Ikä&#10;Rating" />
-                                                <ComboBoxChooser layoutX="10.0" layoutY="13.0" promptText="Hakuehto 2" rivit="Nimi&#10;Taso&#10;Sukupuoli&#10;Ikä&#10;Rating" GridPane.rowIndex="1" />
-                                                <TextField GridPane.columnIndex="1" />
-                                                <TextField layoutX="127.0" layoutY="18.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <ComboBoxChooser fx:id="boxChooserHakuEhto2" prefHeight="25.0" promptText="Hakuehto 1" rivit="Nimi&#10;Taso&#10;Sukupuoli&#10;Ikä&#10;Rating" />
+                                                <TextField fx:id="textHakuEhto2" onKeyReleased="#HandleHakuEhto2" GridPane.columnIndex="1" />
                                              </children>
                                              <padding>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -250,19 +247,6 @@
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.66668701171875" minWidth="10.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.66668701171875" minWidth="10.0" />
                                 </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <ComboBoxChooser rivit="-&#10;Kaikki&#10;Miehet&#10;Naiset&#10;Alle 18v&#10;Alle 30v&#10;Alle 50v&#10;Kätisyys&#10;Taso" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                    <ComboBoxChooser rivit="-&#10;Kaikki&#10;Miehet&#10;Naiset&#10;Alle 18v&#10;Alle 30v&#10;Alle 50v&#10;Kätisyys&#10;Taso" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
-                                    <ComboBoxChooser rivit="-&#10;Kaikki&#10;Miehet&#10;Naiset&#10;Alle 18v&#10;Alle 30v&#10;Alle 50v&#10;Kätisyys&#10;Taso" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                    <Label text="Hakukriteerit:">
-                                       <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
