@@ -239,24 +239,34 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <BorderPane prefHeight="346.0" prefWidth="487.0">
-                           <top>
-                              <GridPane BorderPane.alignment="CENTER">
-                                <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.6666259765625" minWidth="10.0" prefWidth="55.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.6666259765625" minWidth="10.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.66668701171875" minWidth="10.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.66668701171875" minWidth="10.0" />
-                                </columnConstraints>
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </GridPane>
-                           </top>
                            <center>
                               <StringGrid fx:id="gridRanking" prefHeight="273.0" prefWidth="379.0" rivit="Ranking | Nimi | Ratio&#10;1 | Simo Siili | 0,9&#10;2 | Lenni Lokki | 0,67&#10;3 | Kalle Koppis | 0,52&#10;4 | Amir Amppari | 0,52&#10;5 | Sampsa Sammakko | 0,25" BorderPane.alignment="CENTER">
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
+                                 <BorderPane.margin>
+                                    <Insets top="10.0" />
+                                 </BorderPane.margin>
+                              </StringGrid>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Historia">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane prefHeight="346.0" prefWidth="487.0">
+                           <center>
+                              <StringGrid fx:id="gridHistoria" prefHeight="273.0" prefWidth="379.0" rivit="Pelaajat | Erä 1 | Erä 2 | erä 3&#10;jap vs JAP | 21-15 | 21-15&#10;" BorderPane.alignment="CENTER">
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                                 <BorderPane.margin>
+                                    <Insets top="10.0" />
+                                 </BorderPane.margin>
                               </StringGrid>
                            </center>
                         </BorderPane>

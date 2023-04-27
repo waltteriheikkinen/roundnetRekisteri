@@ -38,6 +38,7 @@ public class TiistaiSpikeGUIController implements Initializable{
     @FXML private ListChooser<Pelaaja> chooserValittavat;
     @FXML private ListChooser<Pelaaja> chooserValitut;
     @FXML private StringGrid<Object> gridRanking;
+    @FXML private StringGrid<Object> gridHistoria;
     @FXML private ComboBoxChooser<String> boxChooserHakuEhto;
     @FXML private ComboBoxChooser<String> boxChooserHakuEhto2;
     @FXML private TextField textHakuEhto;
@@ -144,7 +145,7 @@ public class TiistaiSpikeGUIController implements Initializable{
     
     @FXML
     void handleRankingAvaus() {
-        paivitaRanking();
+       // paivitaRanking();
     }
     
     //=======================================================================================================================
@@ -156,6 +157,7 @@ public class TiistaiSpikeGUIController implements Initializable{
         chooserValittavat.clear();
         chooserValitut.clear();
         gridRanking.setSortable(-1, false);
+        gridHistoria.setColumnWidth(0, 300);
         
         chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
         chooserValittavat.setOnMouseClicked( e -> {if (e.getClickCount() == 2)  valitsePelaaja();} );
@@ -196,6 +198,7 @@ public class TiistaiSpikeGUIController implements Initializable{
         try {
             tiistaispike.lueTiedostosta(hakemisto);
             paivitaRanking();
+            paivitaHistoria();
             hae(0);
         } catch (FileNotFoundException e) {
             Dialogs.showMessageDialog("Ongelmia tiedoston kanssa");
@@ -203,6 +206,25 @@ public class TiistaiSpikeGUIController implements Initializable{
     }
     
     
+    private void paivitaHistoria() {
+        gridHistoria.clear();
+        for (Ottelu ottelu : this.tiistaispike.getOtteluLista()) {
+            int[] parit = ottelu.getParit();
+            String pelaajat = Mjonot.erota(new StringBuilder(tiistaispike.getPelaaja(parit[0]).getNimi())) + " & " +
+                    Mjonot.erota(new StringBuilder(tiistaispike.getPelaaja(parit[1]).getNimi())) + "  -VS-  " +
+                    Mjonot.erota(new StringBuilder(tiistaispike.getPelaaja(parit[2]).getNimi())) + " & " + 
+                    Mjonot.erota(new StringBuilder(tiistaispike.getPelaaja(parit[3]).getNimi())); 
+            int[] pisteet = ottelu.getPisteet();
+            String era1 = pisteet[0] + "-" + pisteet[1];
+            String era2 = pisteet[2] + "-" + pisteet[3];
+            String era3 = pisteet[4] + "-" + pisteet[5];
+                
+            String[] rivi = {pelaajat, era1, era2, era3};
+            gridHistoria.add(rivi);
+            }
+        }
+
+
     private void tallenna() {
         try {
             tiistaispike.tallenna();
@@ -259,6 +281,7 @@ public class TiistaiSpikeGUIController implements Initializable{
         LinkedHashMap<Integer, Double> ranking = tiistaispike.getRanking();        
         int i = 1;
         for (Map.Entry<Integer, Double> entry : ranking.entrySet()) {
+            if (this.tiistaispike.getPelaaja(entry.getKey()) == null) continue;
             String nimi = tiistaispike.getPelaaja(entry.getKey()).getNimi();
             String ratio = decimalFormat.format(entry.getValue());
             String[] rivi = {Integer.toString(i), nimi, ratio};

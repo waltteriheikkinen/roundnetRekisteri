@@ -3,6 +3,7 @@ package fxHtSpike;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import htSpike.Pelaaja;
@@ -36,7 +37,9 @@ public class MuokkaaPelaajaaController implements ModalControllerInterface<Pelaa
     @FXML
     void handleTallenna() {
         kasitteleMuutos();
-        this.muutos = true;
+        if (!muutos) {
+            return;
+        }
         ModalController.closeStage(textNimi);
     }
 
@@ -70,14 +73,48 @@ public class MuokkaaPelaajaaController implements ModalControllerInterface<Pelaa
     
     
     
-    //TODO: 2 Oikeellisuustarkistukset ja sama metodi muille osille
     private void kasitteleMuutos() {
         if (muokattavapelaaja == null) return;
+        String muutettu = this.textNimi.getText(); 
+        if (muutettu.equals("")) {
+            Dialogs.showMessageDialog("Nimi ei voi olla tyhjä!");
+            return;
+        }
         this.muokattavapelaaja.setNimi(this.textNimi.getText());
+        
+        muutettu = this.textIka.getText(); 
+        if (!muutettu.matches("[0-9]+")) {
+            Dialogs.showMessageDialog("Väärä muoto iälle!");
+            return;
+        }
         this.muokattavapelaaja.setIka(Integer.parseInt(this.textIka.getText()));
-        this.muokattavapelaaja.setKatisyys(this.textKatisyys.getText());
-        this.muokattavapelaaja.setSukuPuoli(this.textSukuPuoli.getText());
+        
+        muutettu = this.textKatisyys.getText().toLowerCase(); 
+        if (!muutettu.equals("oikea") && !muutettu.equals("vasen") && !muutettu.equals("molempikätinen")) {
+            Dialogs.showMessageDialog("Korjaa kätisyys!\nVaihtoehdot ovat:\nOikea\nVasen\nMolempikätinen");
+            return;
+        }
+        StringBuilder s = new StringBuilder(muutettu.substring(1));
+        s.insert(0, muutettu.toUpperCase().substring(0,1));
+        this.muokattavapelaaja.setKatisyys(s.toString());
+        
+        muutettu = this.textSukuPuoli.getText().toLowerCase(); 
+        if (!muutettu.equals("mies") && !muutettu.equals("nainen") && !muutettu.equals("muu")) {
+            Dialogs.showMessageDialog("Korjaa sukupuoli!\nVaihtoehdot ovat:\nMies\nNainen\nMuu");
+            return;
+        }
+        s = new StringBuilder(muutettu.substring(1));
+        s.insert(0, muutettu.toUpperCase().substring(0,1));
+        this.muokattavapelaaja.setSukuPuoli(s.toString());
+        
+        muutettu = this.textTaso.getText(); 
+        if (!muutettu.matches("[1-5]")) {
+            Dialogs.showMessageDialog("Tason täytyy olla väliltä 1-5!");
+            return;
+        }
         this.muokattavapelaaja.setTid(Integer.parseInt(this.textTaso.getText()));
+        
+        this.muutos = true;
     }
     
     

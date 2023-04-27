@@ -6,6 +6,7 @@ package fxHtSpike;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import htSpike.Pelaaja;
@@ -30,13 +31,11 @@ public class UusiPelaajaController implements ModalControllerInterface<Pelaaja>,
     @FXML private TextField textTaso;
     @FXML private TextField textSukuPuoli;
     @FXML private TextField textKatisyys;
-    private boolean muutos;
+    private boolean muutos = false;
     private Pelaaja uusipelaaja = new Pelaaja();
 
     @FXML void handlePeruuta() {
-        this.muutos = false;
         ModalController.closeStage(textNimi);
-       // Dialogs.showMessageDialog("Vielä ei osata peruuttaa");
     }
 
     @FXML void handleTallenna() {
@@ -45,7 +44,6 @@ public class UusiPelaajaController implements ModalControllerInterface<Pelaaja>,
             ModalController.closeStage(textNimi);
         }
         return;
-       // Dialogs.showMessageDialog("Vielä ei osata tallentaa pelaajaa");
     }
 
     
@@ -60,19 +58,16 @@ public class UusiPelaajaController implements ModalControllerInterface<Pelaaja>,
     @Override
     public void handleShown() {
         // 
-        
     }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         // 
-        
     }
 
     @Override
     public void setDefault(Pelaaja arg0) {
         // 
-        
     }
 
     
@@ -80,21 +75,47 @@ public class UusiPelaajaController implements ModalControllerInterface<Pelaaja>,
     
     
     private void kasitteleMuutos() {
-       /*
-        for (TextField kentta : this.tekstit) {
-            if (kentta == null || kentta.getText() == "") {
-                Dialogs.showMessageDialog("Täytä kaikki kentät!");
-                this.muutos = false;
-                return;
-            }
+        if (uusipelaaja == null) return;
+        String muutettu = this.textNimi.getText(); 
+        if (muutettu.equals("")) {
+            Dialogs.showMessageDialog("Nimi ei voi olla tyhjä!");
+            return;
         }
-        */
         this.uusipelaaja.setNimi(this.textNimi.getText());
+        
+        muutettu = this.textIka.getText(); 
+        if (!muutettu.matches("[0-9]+")) {
+            Dialogs.showMessageDialog("Väärä muoto iälle!");
+            return;
+        }
         this.uusipelaaja.setIka(Integer.parseInt(this.textIka.getText()));
-        this.uusipelaaja.setKatisyys(this.textKatisyys.getText());
-        this.uusipelaaja.setSukuPuoli(this.textSukuPuoli.getText());
+        
+        muutettu = this.textKatisyys.getText().toLowerCase(); 
+        if (!muutettu.equals("oikea") && !muutettu.equals("vasen") && !muutettu.equals("molempikätinen")) {
+            Dialogs.showMessageDialog("Korjaa kätisyys!\nVaihtoehdot ovat:\nOikea\nVasen\nMolempikätinen");
+            return;
+        }
+        StringBuilder s = new StringBuilder(muutettu.substring(1));
+        s.insert(0, muutettu.toUpperCase().substring(0,1));
+        this.uusipelaaja.setKatisyys(s.toString());
+        
+        muutettu = this.textSukuPuoli.getText().toLowerCase(); 
+        if (!muutettu.equals("mies") && !muutettu.equals("nainen") && !muutettu.equals("muu")) {
+            Dialogs.showMessageDialog("Korjaa sukupuoli!\nVaihtoehdot ovat:\nMies\nNainen\nMuu");
+            return;
+        }
+        s = new StringBuilder(muutettu.substring(1));
+        s.insert(0, muutettu.toUpperCase().substring(0,1));
+        this.uusipelaaja.setSukuPuoli(s.toString());
+        
+        muutettu = this.textTaso.getText(); 
+        if (!muutettu.matches("[1-5]")) {
+            Dialogs.showMessageDialog("Tason täytyy olla väliltä 1-5!");
+            return;
+        }
         this.uusipelaaja.setTid(Integer.parseInt(this.textTaso.getText()));
-        this.muutos = true;  
+        
+        this.muutos = true;
     }
     
     

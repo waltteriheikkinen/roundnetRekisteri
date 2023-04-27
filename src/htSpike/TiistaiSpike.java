@@ -5,6 +5,7 @@ package htSpike;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
@@ -129,6 +130,14 @@ public class TiistaiSpike {
         this.pelaajat.poista(poistettava);
     }
     
+    
+    /**
+     * @return ottelulista
+     */
+    public ArrayList<Ottelu> getOtteluLista() {
+        return this.ottelut.getOtteluLista();
+    }
+    
 
     /**
      * @param args ei käytössä
@@ -182,5 +191,8 @@ public class TiistaiSpike {
         }
     
     }
+
+
+    
 
 }
