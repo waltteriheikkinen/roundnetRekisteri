@@ -29,6 +29,30 @@ public class Ottelut {
     /**
      * @param hakemisto mistä tiedosto löytyy
      * @throws FileNotFoundException poikkeus jos tiedostoa ei löydy
+     * Tiedoston muoto:
+     * 1|2|3|4|21|15|21|15|0|0
+     * @example
+     * <pre name="test">
+     * #THROWS IOException
+     * #import java.io.IOException;
+     * #import fi.jyu.mit.ohj2.VertaaTiedosto;
+     * #STATICIMPORT
+     * #import htSpike.*;
+     * #import java.util.ArrayList;
+     * VertaaTiedosto.kirjoitaTiedosto("comtestTied/ottelut.dat",
+     *      "1|2|3|4|1|0|1|0|1|0\n"+
+     *      "1|2|3|4|1|0|1|0|1|1\n"+
+     *      "1|2|3|4|1|0|1|0|1|2\n");
+     * 
+     *  Ottelut ottelut = new Ottelut();
+     *  ottelut.lueTiedostosta("comtestTied");
+     *  ArrayList<Ottelu> lista = ottelut.getOtteluLista();
+     *  lista.get(0).toString() === "1|2|3|4|1|0|1|0|1|0"
+     *  lista.get(1).toString() === "1|2|3|4|1|0|1|0|1|1"
+     *  lista.get(2).toString() === "1|2|3|4|1|0|1|0|1|2"
+     *  
+     *  VertaaTiedosto.tuhoaTiedosto("comtestTied/ottelut.dat");
+     * </pre>
      */
     public void lueTiedostosta(String hakemisto) throws FileNotFoundException {
         String tiedostonimi = hakemisto + "/ottelut.dat";
@@ -46,6 +70,7 @@ public class Ottelut {
             throw new FileNotFoundException(e.getMessage() + "Tiedosto ei aukea!");
         }
     }
+
     
     /**
      * @param hakemisto mihin tallennetaan
@@ -54,7 +79,26 @@ public class Ottelut {
      * 1|2|3|4|21|15|21|15|0|0
      * @example
      * <pre name="test">
+     * #THROWS IOException
+     * #import java.io.IOException;
+     * #import fi.jyu.mit.ohj2.VertaaTiedosto;
+     * #STATICIMPORT
+     * #import htSpike.*;
+     * Ottelu ottelu1 = new Ottelu(new int[]{1,2,3,4}, new int[]{1,0,1,0,1,0});
+     * Ottelu ottelu2 = new Ottelu(new int[]{1,2,3,4}, new int[]{1,0,1,0,1,0});
+     * Ottelu ottelu3 = new Ottelu(new int[]{1,2,3,4}, new int[]{1,0,1,0,1,0});
+     * Ottelut ottelut = new Ottelut();
+     * ottelut.lisaa(ottelu1);
+     * ottelut.lisaa(ottelu2);
+     * ottelut.lisaa(ottelu3);
      * 
+     *  String tulos =
+     *      "1|2|3|4|1|0|1|0|1|0\n"+
+     *      "1|2|3|4|1|0|1|0|1|0\n"+
+     *      "1|2|3|4|1|0|1|0|1|0\n";
+     *  ottelut.tallenna("comtestTied");
+     *  VertaaTiedosto.vertaaFileString("comtestTied/ottelut.dat", tulos) === null;
+     *  VertaaTiedosto.tuhoaTiedosto("comtestTied/ottelut.dat");
      * </pre>
      */
     public void tallenna(String hakemisto) throws FileNotFoundException {
@@ -73,7 +117,7 @@ public class Ottelut {
     /**
      * @return listan otteluista
      */
-    public ArrayList<Ottelu> getOttelulista() {
+    public ArrayList<Ottelu> getOtteluLista() {
         return this.ottelulista;
     }
     
@@ -92,16 +136,16 @@ public class Ottelut {
      * Ottelu peli3 = new Ottelu();
      * Ottelu peli4 = new Ottelu();
      * Ottelu peli5 = new Ottelu();
-     * ottelut.getOttelulista().size() === 0;
+     * ottelut.getOtteluLista().size() === 0;
      * ottelut.lisaa(peli1);
      * ottelut.lisaa(peli2);
      * ottelut.lisaa(peli3);
-     * Ottelu eka = ottelut.getOttelulista().get(0);
-     * ottelut.getOttelulista().size() === 3;
+     * Ottelu eka = ottelut.getOtteluLista().get(0);
+     * ottelut.getOtteluLista().size() === 3;
      * ottelut.lisaa(peli4);
      * ottelut.lisaa(peli5);
-     * ottelut.getOttelulista().size() === 3;
-     * eka === ottelut.getOttelulista().get(2);
+     * ottelut.getOtteluLista().size() === 5;
+     * eka === ottelut.getOtteluLista().get(2);
      * </pre>
      */
     public void lisaa(Ottelu peli) {
@@ -115,7 +159,7 @@ public class Ottelut {
      * TODO: 3 taulukot mielellään mapeiksi
      */
     public void rankkaa() {
-        
+        this.ranking.clear();
         int[] ottelumaara = new int[this.ottelulista.size()*4];
         int[] voitetut = new int[this.ottelulista.size()*2];
         
@@ -147,28 +191,11 @@ public class Ottelut {
             if (voittoratio[i] > 0) lajittelematon.put(i, voittoratio[i]);
         }
         
-        // create a list of the map's entries
         List<Map.Entry<Integer, Double>> listaRanking = new ArrayList<>(lajittelematon.entrySet());
-
-        // sort the list by value
         listaRanking.sort(Comparator.comparing(Map.Entry::getValue, Comparator.reverseOrder()));
-
-        // create a new map with the sorted entries
         for (Map.Entry<Integer, Double> entry : listaRanking) {
             this.ranking.put(entry.getKey(), entry.getValue());
         }
-        
-        
-        /*
-        this.ranking.put(1, 0.4 );
-        this.ranking.put(2, 0.6);
-        this.ranking.put(3, 0.3);
-        this.ranking.put(4, 0.8);
-        this.ranking.put(5, 0.95);
-        this.ranking.put(6, 0.7);
-        this.ranking.put(7, 0.15);
-        this.ranking.put(8, 0.45);
-        */
     }
     
     

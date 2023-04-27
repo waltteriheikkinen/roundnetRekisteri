@@ -20,7 +20,6 @@ public class Pelaajat {
     private int lkm = 0;
 
     
-    //TODO: 1 testit tähän
     /**
      * @param hakemisto mihin tallennetaan
      * @throws FileNotFoundException poikkeus
@@ -31,10 +30,12 @@ public class Pelaajat {
      * #THROWS IOException
      * #import java.io.IOException;
      * #import fi.jyu.mit.ohj2.VertaaTiedosto;
+     * #STATICIMPORT
+     * #import htSpike.*;
      * Pelaaja pelaaja1 = new Pelaaja();
      * pelaaja1.parse("1|Heppu1|1|1|Oikea|Nainen");
      * Pelaaja pelaaja2 = new Pelaaja();
-     * pelaaja2.parse(""2|Heppu2|2|2|Vasen|Nainen");
+     * pelaaja2.parse("2|Heppu2|2|2|Vasen|Nainen");
      * Pelaaja pelaaja3 = new Pelaaja();
      * pelaaja3.parse("3|Heppu3|3|3|Oikea|Mies");
      * Pelaajat pelaajat = new Pelaajat();
@@ -42,18 +43,13 @@ public class Pelaajat {
      * pelaajat.lisaa(pelaaja2);
      * pelaajat.lisaa(pelaaja3);
      * 
-     *  VertaaTiedosto.kirjoitaTiedosto("pelaajatallennus.txt",
+     *  String tulos =
      *      "1|Heppu1|1|1|Oikea|Nainen\n"+
      *      "2|Heppu2|2|2|Vasen|Nainen\n"+
-     *      "3|Heppu3|3|3|Oikea|Mies\n");
-     *  String tulos =
-     *      "33 hiljaa 1 hiipii\n"+
-     *      "36 1 3 5 55\n";
-     *  VertaaTiedosto.tuhoaTiedosto("pelaajatallennus.txt"); 
-     *  main(new String[]{"hiljaa.txt","tulos.txt"});
-     *  VertaaTiedosto.vertaaFileString("tulos.txt",tulos) === null;
-     *  VertaaTiedosto.tuhoaTiedosto("tulos.txt");
-     *  VertaaTiedosto.tuhoaTiedosto("hiljaa.txt");
+     *      "3|Heppu3|3|3|Oikea|Mies\n";
+     *  pelaajat.tallenna("comtestTied");
+     *  VertaaTiedosto.vertaaFileString("comtestTied/pelaajat.dat", tulos) === null;
+     *  VertaaTiedosto.tuhoaTiedosto("comtestTied/pelaajat.dat");
      * </pre>
      */
     public void tallenna(String hakemisto) throws FileNotFoundException {
@@ -136,7 +132,6 @@ public class Pelaajat {
      * @example
      * <pre name="test">
      * #STATICIMPORT
-     * #CLASSIMPORT
      * Pelaajat pelaajat = new Pelaajat();
      * Pelaaja simo1 = new Pelaaja();
      * Pelaaja simo2 = new Pelaaja();
@@ -165,6 +160,29 @@ public class Pelaajat {
     /**
      * @param hakemisto mistä tiedosto löytyy
      * @throws FileNotFoundException poikkeus jos tiedostoa ei löydy
+     * Tiedoston muoto:
+     * 1|Heppu1|4|38|Oikea|Mies
+     * @example
+     * <pre name="test">
+     * #THROWS IOException
+     * #import java.io.IOException;
+     * #import fi.jyu.mit.ohj2.VertaaTiedosto;
+     * #STATICIMPORT
+     * #import htSpike.*;
+     * #import java.util.ArrayList;
+     * VertaaTiedosto.kirjoitaTiedosto("comtestTied/pelaajat.dat",
+     *      "1|Heppu1|1|1|Oikea|Nainen\n"+
+     *      "2|Heppu2|2|2|Vasen|Nainen\n"+
+     *      "3|Heppu3|3|3|Oikea|Mies\n");
+     * 
+     *  Pelaajat pelaajat = new Pelaajat();
+     *  pelaajat.lueTiedostosta("comtestTied");
+     *  pelaajat.annaPelaaja(0).toString() === "1|Heppu1|1|1|Oikea|Nainen";
+     *  pelaajat.annaPelaaja(1).toString() === "2|Heppu2|2|2|Vasen|Nainen";
+     *  pelaajat.annaPelaaja(2).toString() === "3|Heppu3|3|3|Oikea|Mies";
+     *  
+     *  VertaaTiedosto.tuhoaTiedosto("comtestTied/pelaajat.dat");
+     * </pre>
      */
     public void lueTiedostosta(String hakemisto) throws FileNotFoundException {
         String tiedostonimi = hakemisto + "/pelaajat.dat";

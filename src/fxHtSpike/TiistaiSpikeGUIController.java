@@ -81,6 +81,7 @@ public class TiistaiSpikeGUIController implements Initializable{
                 tiistaispike.lisaa(ottelu);
             }
             tallenna();
+            paivitaRanking();
         }
         else Dialogs.showMessageDialog("Pelaajia täytyy olla vähintään 4 ja parillinen määrä!");
         return;
@@ -230,7 +231,7 @@ public class TiistaiSpikeGUIController implements Initializable{
     /**
      * paivittaa ranking listan
      */
-    protected void paivitaRanking() {
+    private void paivitaRanking() {
         gridRanking.clear();
         tiistaispike.rankkaa();
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
