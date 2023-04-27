@@ -47,7 +47,10 @@ public class OttelutTuloksetController implements ModalControllerInterface<Objec
     }
 
     @FXML void handleTallennaJaLopeta() {
-        tallennaOttelut();
+        if (!tallennaOttelut()) {
+            Dialogs.showMessageDialog("Korjaa tulokset");
+            return;
+        }
         this.pelatut[0] = this.pelatutlista;
         ModalController.closeStage(tallennaJaLopetaButton);
     }
@@ -94,7 +97,7 @@ public class OttelutTuloksetController implements ModalControllerInterface<Objec
     /*
      * Aliohjelma tallentaa ottelut
      */
-    private void tallennaOttelut() {
+    private Boolean tallennaOttelut() {
         int rivit = this.ottelut.size();
         String[] erat = new String[3];
         
@@ -105,12 +108,14 @@ public class OttelutTuloksetController implements ModalControllerInterface<Objec
                 if (j == 3) erat[2] = this.gridOttelut.get(i, j);
             }
             int[] pisteet = kasitteleErat(erat);
+            if (pisteet[0] == -1) return false;
             if (tarkistapisteet(pisteet)) {
                 int[] pelatunparit = this.ottelut.get(i).getParit();
                 this.pelatutlista.add(new Ottelu(pelatunparit, pisteet));
             }
+            
         }
-        
+        return true;
         
     }
     
@@ -150,9 +155,11 @@ public class OttelutTuloksetController implements ModalControllerInterface<Objec
         int[] tulos = new int[6];
         int i = 0;
         for (String era : erat) {
-            if (era == null || era.equals("") || !era.contains("-")) {
+            
+            if (era == null || era.equals("") && !era.matches("^\\d+-\\d+$")) {
                 i = i + 2;
-                continue;
+                int[] kusi = {-1};
+                return kusi;
             }
             StringBuilder eraB = new StringBuilder(era);
             int tulos1 = Integer.parseInt(Mjonot.erota(eraB, '-'));

@@ -210,6 +210,7 @@ public class TiistaiSpikeGUIController implements Initializable{
         gridHistoria.clear();
         for (Ottelu ottelu : this.tiistaispike.getOtteluLista()) {
             int[] parit = ottelu.getParit();
+            if (!tarkistaOlemassaOlo(parit)) continue;
             String pelaajat = Mjonot.erota(new StringBuilder(tiistaispike.getPelaaja(parit[0]).getNimi())) + " & " +
                     Mjonot.erota(new StringBuilder(tiistaispike.getPelaaja(parit[1]).getNimi())) + "  -VS-  " +
                     Mjonot.erota(new StringBuilder(tiistaispike.getPelaaja(parit[2]).getNimi())) + " & " + 
@@ -223,6 +224,14 @@ public class TiistaiSpikeGUIController implements Initializable{
             gridHistoria.add(rivi);
             }
         }
+
+
+    private boolean tarkistaOlemassaOlo(int[] parit) {
+        for (int i : parit) {
+            if (tiistaispike.getPelaaja(i) == null) return false;
+        }
+        return true;
+    }
 
 
     private void tallenna() {
