@@ -31,13 +31,11 @@ public class MuokkaaPelaajaaController implements ModalControllerInterface<Pelaa
     
     @FXML void handlePeruuta() {
         ModalController.closeStage(textNimi);
-        //TODO: 2 miks vitussa textnimi sulkemisessa?
     }
 
     @FXML
     void handleTallenna() {
         kasitteleMuutos();
-        //TODO: 2 Muutoksen käsittely toimivaksi pelaajan muokkauksen tallennuksessa
         this.muutos = true;
         ModalController.closeStage(textNimi);
     }

@@ -9,8 +9,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
 
 /**
  * @author waltt
@@ -19,7 +23,7 @@ import java.util.TreeMap;
  */
 public class Ottelut {
     private ArrayList<Ottelu> ottelulista = new ArrayList<Ottelu>();
-    private TreeMap<Integer, Double> ranking = new TreeMap<Integer, Double>();
+    private LinkedHashMap<Integer, Double> ranking = new LinkedHashMap<Integer, Double>();
     
     
     /**
@@ -137,9 +141,23 @@ public class Ottelut {
                 voittoratio[i] = voitot / kaikki;
             }
         }
+        
+        HashMap<Integer, Double> lajittelematon = new HashMap<Integer,Double>();
         for (int i = 1; i < voittoratio.length; i++) {
-            if (voittoratio[i] > 0) this.ranking.put(i, voittoratio[i]);
+            if (voittoratio[i] > 0) lajittelematon.put(i, voittoratio[i]);
         }
+        
+        // create a list of the map's entries
+        List<Map.Entry<Integer, Double>> listaRanking = new ArrayList<>(lajittelematon.entrySet());
+
+        // sort the list by value
+        listaRanking.sort(Comparator.comparing(Map.Entry::getValue, Comparator.reverseOrder()));
+
+        // create a new map with the sorted entries
+        for (Map.Entry<Integer, Double> entry : listaRanking) {
+            this.ranking.put(entry.getKey(), entry.getValue());
+        }
+        
         
         /*
         this.ranking.put(1, 0.4 );
@@ -157,7 +175,7 @@ public class Ottelut {
     /**
      * @return palauttaa otteluista muodostetun ranking listan
      */
-    public TreeMap<Integer, Double> getRanking(){
+    public LinkedHashMap<Integer, Double> getRanking(){
         return this.ranking;
     }
     

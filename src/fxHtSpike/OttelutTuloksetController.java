@@ -14,7 +14,6 @@ import fi.jyu.mit.fxgui.ModalControllerInterface;
 import fi.jyu.mit.fxgui.StringGrid;
 import fi.jyu.mit.ohj2.Mjonot;
 import htSpike.Ottelu;
-import htSpike.Pelaaja;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -25,7 +24,7 @@ import javafx.stage.Stage;
  * @author waltt
  * @version 24.2.2023
  * Kontrolleri ohjaa otteluiden tulosten merkkaamista ja tallentamista
- * TODO: Listaan pelaajien nimet vielä
+ * TODO: 2 Listaan pelaajien nimet vielä. Esim Stringien vieminen voi toimia
  */
 public class OttelutTuloksetController implements ModalControllerInterface<ArrayList<Ottelu>>, Initializable {
 
@@ -85,7 +84,7 @@ public class OttelutTuloksetController implements ModalControllerInterface<Array
 
     private void luoOttelut() {
         for (Ottelu ottelu : this.ottelut) {
-            String otteluparit = ottelu.getParit()[0] + "&" + ottelu.getParit()[1] + "  VS  " + ottelu.getParit()[2] + "&" + ottelu.getParit()[0];
+            String otteluparit = ottelu.getParit()[0] + "&" + ottelu.getParit()[1] + "  VS  " + ottelu.getParit()[2] + "&" + ottelu.getParit()[3];
             String[] rivi = {otteluparit, "","",""};
             this.gridOttelut.add(rivi);
         }

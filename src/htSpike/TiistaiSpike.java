@@ -5,7 +5,7 @@ package htSpike;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 /**
  * @author waltt
@@ -31,7 +31,7 @@ public class TiistaiSpike {
     /**
      * @return palauttaa otteluiden ranking listan
      */
-    public TreeMap<Integer, Double> getRanking(){
+    public LinkedHashMap<Integer, Double> getRanking(){
         return this.ottelut.getRanking();
     }
     

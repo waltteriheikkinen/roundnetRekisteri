@@ -6,10 +6,10 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 
 import fi.jyu.mit.fxgui.*;
 import htSpike.*;
@@ -28,13 +28,17 @@ import javafx.scene.layout.GridPane;
  * @author waltt
  * @version 22.2.2023
  * Controlleri koko ojelmalle
- * TODO: 1a etsi toiminto
+ * TODO: 3 Lisää etsi toimintoja
+ * TODO: 3 Järjestä jäsenet aakkosjärjestykseen
+ * TODO: 2 Korjaa rankinglistan päivitys uusien otteluiden jälkeen
  */
 public class TiistaiSpikeGUIController implements Initializable{
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
     @FXML private ListChooser<Pelaaja> chooserValittavat;
     @FXML private ListChooser<Pelaaja> chooserValitut;
     @FXML private StringGrid<Object> gridRanking;
+    @FXML private ComboBoxChooser<String> boxChooserHakuEhto;
+    @FXML private TextField textHakuEhto;
     @FXML private Tab tabRanking;
     @FXML private GridPane gridPelaaja;
     @FXML private BorderPane borderPelaaja;
@@ -44,11 +48,17 @@ public class TiistaiSpikeGUIController implements Initializable{
     @FXML private TextField tiedotKatisyys;
     @FXML private TextField tiedotRating;
     @FXML private TextField tiedotTaso;
+    @FXML private TextField tiedotJnro;
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         alusta();
         
+    }
+    
+    
+    @FXML void HandleHakuEhto() {
+        hae(0);
     }
     
     @FXML
@@ -99,7 +109,6 @@ public class TiistaiSpikeGUIController implements Initializable{
 
     @FXML
     void HandleUusiPelaaja() {
-        uusiPelaaja();
         Pelaaja uusi = UusiPelaajaController.uusiPelaaja(null, null);
         if (uusi == null) return;
         uusi.rekisteroi();
@@ -140,7 +149,6 @@ public class TiistaiSpikeGUIController implements Initializable{
         chooserValittavat.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE ) valitsePelaaja();});
         chooserValitut.setOnMouseClicked( e -> {if (e.getClickCount() == 2) poistaValittu();} );
         chooserValitut.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE ) poistaValittu();});
-        
     }
     
     
@@ -165,6 +173,7 @@ public class TiistaiSpikeGUIController implements Initializable{
     protected void lueTiedosto(String hakemisto) {
         try {
             tiistaispike.lueTiedostosta(hakemisto);
+            paivitaRanking();
             hae(0);
         } catch (FileNotFoundException e) {
             Dialogs.showMessageDialog("Ongelmia tiedoston kanssa");
@@ -218,11 +227,14 @@ public class TiistaiSpikeGUIController implements Initializable{
         }
     }
     
-    private void paivitaRanking() {
+    /**
+     * paivittaa ranking listan
+     */
+    protected void paivitaRanking() {
         gridRanking.clear();
         tiistaispike.rankkaa();
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        TreeMap<Integer, Double> ranking = tiistaispike.getRanking();        
+        LinkedHashMap<Integer, Double> ranking = tiistaispike.getRanking();        
         int i = 1;
         for (Map.Entry<Integer, Double> entry : ranking.entrySet()) {
             String nimi = tiistaispike.getPelaaja(entry.getKey()).getNimi();
@@ -247,9 +259,14 @@ public class TiistaiSpikeGUIController implements Initializable{
         tiedotIka.setText(Integer.toString(pelaajaKohdalla.getIka()));
         tiedotSukupuoli.setText(pelaajaKohdalla.getSukupuoli());
         tiedotKatisyys.setText(pelaajaKohdalla.getKatisyys());
+        tiedotJnro.setText(Integer.toString(pelaajaKohdalla.getId()));
         
-        //TODO: 2 hae rating/ranking tieto tietojen näyttöön
-        tiedotRating.setText("");
+        double rating = 0.0;
+        if (this.tiistaispike.getRanking().get(pelaajaKohdalla.getId()) != null) {
+            rating = this.tiistaispike.getRanking().get(pelaajaKohdalla.getId());
+        }
+        String ratingString = String.format("%.2f", rating);
+        tiedotRating.setText(ratingString);
     }
     
     
@@ -272,10 +289,12 @@ public class TiistaiSpikeGUIController implements Initializable{
     private void hae(int id) {
         chooserPelaajat.clear();
         chooserValittavat.clear();
+        String ehto = this.textHakuEhto.getText();
         int index = 0;
         for (int i = 0; i < tiistaispike.getPelaajia(); i++) {
             Pelaaja pelaaja = tiistaispike.annaPelaaja(i);
             if (pelaaja.getId() == id) index = i;
+            if (!pelaaja.getNimi().toLowerCase().contains(ehto.toLowerCase())) continue;
             chooserPelaajat.add(pelaaja.getNimi(), pelaaja);
             chooserValittavat.add(pelaaja.getNimi(), pelaaja);
         }
@@ -290,14 +309,4 @@ public class TiistaiSpikeGUIController implements Initializable{
     public void setKerho(TiistaiSpike tiistaispike) {
         this.tiistaispike = tiistaispike;        
     }
-    
-    /**
-     * @return viitteen tiistaispikeen
-     */
-    public TiistaiSpike getTiistaiSpike() {
-        return this.tiistaispike;
-    }
-    
-    
-
 }
