@@ -43,7 +43,8 @@ public class OttelutTuloksetController implements ModalControllerInterface<Objec
     }
     
     @FXML void handlePeruuta() {
-        Dialogs.showMessageDialog("Vielä ei osata peruuttaa");
+        pelatut = null;
+        ModalController.closeStage(tallennaJaLopetaButton);
     }
 
     @FXML void handleTallennaJaLopeta() {
@@ -107,6 +108,7 @@ public class OttelutTuloksetController implements ModalControllerInterface<Objec
                 if (j == 2) erat[1] = this.gridOttelut.get(i, j);
                 if (j == 3) erat[2] = this.gridOttelut.get(i, j);
             }
+            
             int[] pisteet = kasitteleErat(erat);
             if (pisteet[0] == -1) return false;
             if (tarkistapisteet(pisteet)) {
@@ -127,9 +129,9 @@ public class OttelutTuloksetController implements ModalControllerInterface<Objec
      */
     private boolean tarkistapisteet(int[] pisteet) {
         int summa = 0;
-        for (int i = 0; i < pisteet.length; i++) {
-            if (pisteet[i] < 0) return false;
-            summa = summa + pisteet[i];
+        for (int i : pisteet) {
+            if (i < 0) return false;
+            summa = summa + i;
         }
         if (summa <= 0) return false;
         return true;
@@ -156,8 +158,11 @@ public class OttelutTuloksetController implements ModalControllerInterface<Objec
         int i = 0;
         for (String era : erat) {
             
-            if (era == null || era.equals("") && !era.matches("^\\d+-\\d+$")) {
+            if (era == null || era.equals("")) {
                 i = i + 2;
+                continue;
+            }
+            if (!era.matches("^\\d+-\\d+$")) {
                 int[] kusi = {-1};
                 return kusi;
             }

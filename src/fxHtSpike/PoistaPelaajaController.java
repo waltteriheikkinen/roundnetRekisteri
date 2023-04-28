@@ -1,5 +1,6 @@
 package fxHtSpike;
 
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -9,6 +10,7 @@ import htSpike.Pelaaja;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -22,17 +24,17 @@ public class PoistaPelaajaController implements ModalControllerInterface<Pelaaja
 
     @FXML private Button eiButton;
     @FXML private Button kyllaButton;
-    @FXML private TextField textNimi;
+    @FXML private Label textPoistettava;
     private Pelaaja poistettava;
     private boolean poistetaanko = false;
 
     @FXML void handleEi() {
-        ModalController.closeStage(textNimi);
+        ModalController.closeStage(textPoistettava);
     }
 
     @FXML void handleKylla() {
         this.poistetaanko = true;
-        ModalController.closeStage(textNimi);
+        ModalController.closeStage(textPoistettava);
     }
     
     @Override
@@ -61,7 +63,7 @@ public class PoistaPelaajaController implements ModalControllerInterface<Pelaaja
     //==========================================================================
     
     private void laitaTeksti() {
-        this.textNimi.setText(this.poistettava.getNimi());
+        this.textPoistettava.setText(this.poistettava.getNimi() + "?");
     }
 
     /**

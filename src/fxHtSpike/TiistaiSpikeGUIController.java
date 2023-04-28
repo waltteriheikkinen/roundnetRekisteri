@@ -85,18 +85,21 @@ public class TiistaiSpikeGUIController implements Initializable{
     @FXML void HandleEteenPain() {
         if (tarkistaValitut()) {
             List<Pelaaja> parit = ParitSkabatController.luoPariLista(null, chooserValitut.getObjects());
-            
+            if (parit == null) return;
             Object[] ottelutjanimet = luoOttelut(parit);
-            
             Object[] pelatutottelut = OttelutTuloksetController.syotaTulokset(null, ottelutjanimet);
+            if (pelatutottelut == null) return;
             List<Ottelu> tulokset = (List<Ottelu>) pelatutottelut[0];
             for (Ottelu ottelu : tulokset) {
                 tiistaispike.lisaa(ottelu);
             }
             tallenna();
             paivitaRanking();
+            paivitaHistoria();
         }
-        else Dialogs.showMessageDialog("Pelaajia täytyy olla vähintään 4 ja parillinen määrä!");
+        else {
+            Dialogs.showMessageDialog("Pelaajia täytyy olla vähintään 4 ja parillinen määrä!", dlg -> dlg.getDialogPane().setPrefWidth(400));
+        }
         return;
     }
 
