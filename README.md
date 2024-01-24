@@ -1,8 +1,3 @@
-# pohja
+#Roundnet rekisteri
 
-Ei ole vielä mitää järkevää
-
-Pohja kevään 2023 harjoitustöiden GIT-repoille
-
-Lue käyttöohjeet TIMistä: <https://tim.jyu.fi/view/kurssit/tie/ohj2/tyokalut/git/ohj2git#fork>
-
+Rekisteriin voidaan lisätä ja hallinnoida roundnet pelaajien tietoja. Lisäksi rekisterillä voi luoda otteluita ja syöttää tuloksia, jotka tallentuvat järjestelmään. Tulosten perusteella ylläpidetään rankingia.
